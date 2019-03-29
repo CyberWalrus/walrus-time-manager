@@ -1,0 +1,11 @@
+.time-form{
+  min-width: 300px;
+  min-height: 30px;
+  display: grid;
+  grid-template-columns: 100px 200px;
+  > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
