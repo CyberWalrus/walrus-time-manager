@@ -34,6 +34,7 @@ export default class Day extends React.Component {
     return (
       <div>
         <input type="date" value={this.state.day}/>
+        <input type="date" value={this.state.day}/>
         <button onClick={this.dayAdd} >+</button>
         {(() => {
           const timeForms = [];

@@ -1,0 +1,6 @@
+@function wp($value) {      
+  $vw: 0.03vw * $value;
+  $vh: 0.03vh * $value;
+  $vmin: 0.06vmin *$value;
+  @return calc((#{$vw} + #{$vh} + #{$vmin}));  
+ }

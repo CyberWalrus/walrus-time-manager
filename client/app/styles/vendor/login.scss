@@ -1,0 +1,96 @@
+/*
+.login-panel {
+    display: grid;
+    grid-template-rows: 1fr minmax(300px, max-content) 1fr;
+    grid-template-columns: 1fr minmax(400px, max-content) 1fr;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12) 0, rgba(0,150,255,0.5) 100%), url("/assets/img/fon-min.png");
+    background-position: 50% 50%;
+}
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Volkhov');
+.login-panel {
+  overflow: hidden;
+  border-radius: 40px;
+  margin: 0px;
+  display: grid;
+  grid-template-columns: minmax(10px, 1fr) minmax(200px, max-content) minmax(10px, 1fr);
+  width: 100%;
+  max-width: 600px;
+  min-height: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.69);
+  font: normal 16px/1 "Volkhov", serif;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-overflow: ellipsis;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 1) 0, rgba(200, 200, 200, 1) 100%);
+  background-position: 50% 50%;
+  background-origin: padding-box;
+  background-clip: border-box;
+  background-size: auto auto;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5) inset, 0 0 9px 4px rgba(0, 0, 0, 0.5);
+  .login-panel__div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+    height: 100%;
+    p {
+      padding: 0 10px;
+    }
+  }
+  .login-panel__div-col-all {
+    grid-column: 1/4;
+  }
+  .login-panel__div-col-2-3 {
+    grid-column: 2/3;
+  }
+  .login-panel__div-col-2 {
+    grid-column: 2
+  }
+  .login-panel__div-col-3 {
+    grid-column: 3;
+  }
+  .login-panel__div-head {
+    background-color: green;
+  }
+  .login-panel__input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 80px;
+    height: 100%;
+    text-align: center;
+    span {
+      display: grid;
+      grid-template-areas: "label" "input";
+      border: 2px solid rgba(0, 0, 0, 0.69);
+      border-radius: 10px;
+      padding: 10px;
+      label {
+        width: max-content;
+        grid-area: label;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        background: inherit;
+        margin-top: -23px;
+        padding: 2px 5px 2px 5px;
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: normal;
+      }
+      input {
+        grid-area: input;
+        font: normal 16px/1 "Volkhov", serif;
+      }
+    }
+  }
+  .login-panel__signin {
+    text-align: center;
+  }
+}

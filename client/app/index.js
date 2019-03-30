@@ -1,5 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Day from './compponent/day/day'
+import { render } from 'react-dom';
 
-ReactDOM.render(<Day />, document.getElementById(`root`));
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom'
+import { IntlProvider } from "react-intl";
+
+import App from './components/App/App';
+
+import './styles/styles.scss';
+import messages_ru from "./translations/ru.json";
+import messages_en from "./translations/en.json";
+
+const messages = {
+  'ru': messages_ru,
+  'en': messages_en
+};
+const language = navigator.language.split(/[-_]/)[0];  // language without region code
+
+render((
+  <IntlProvider locale={language} messages={messages[language]}>
+    <Router>
+      <App />
+    </Router>
+  </IntlProvider>
+), document.getElementById('app'));
