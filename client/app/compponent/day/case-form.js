@@ -1,42 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import "./case-form.scss";
 import {finished} from 'stream';
 
-
-const list = [
-  {
-    id: 0,
-    title: 'eat',
-    selected: false,
-    key: 'case'
-  },
-  {
-    id: 1,
-    title: 'run',
-    selected: false,
-    key: 'case'
-  },
-  {
-    id: 2,
-    title: 'learn',
-    selected: false,
-    key: 'case'
-  }
-];
-
 export default class CaseForm extends React.Component {
+  static propTypes = {
+    title: PropTypes.string,
+  }
   constructor(props) {
     super(props)
     this.state = {
+      counters: [],
       listOpen: false,
       headerTitle: this.props.title,
-      valueInput: ""
+      valueInput: this.props.title
     }
     this.toggleList = this.toggleList.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.itemClick = this.itemClick.bind(this);
     this.inputAccept = this.inputAccept.bind(this);
+  }
+  componentDidMount() {
+    fetch('/api/counters')
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          counters: json
+        });
+      });
   }
   handleClickOutside() {
     this.setState({
@@ -54,12 +46,6 @@ export default class CaseForm extends React.Component {
     });
   }
   inputAccept(event) {
-    console.log(this.state.valueInput);
-    const valueTitle = this.state.valueInput;
-    function isTitle(i) {
-      return i.title == valueTitle ;
-    }
-    console.log(list.find(isTitle));
   }
   itemClick(evet){
     this.setState({
@@ -76,8 +62,8 @@ export default class CaseForm extends React.Component {
         </div>
         <button onClick={this.inputAccept}>v</button>
         {listOpen && <ul className="case-form__list">
-          {list.map((item) => (
-            <li className="case-form__list_item" key={item.id} onClick={this.itemClick} title={item.title}>{item.title}</li>
+          {this.state.counters.map((item) => (
+            <li className="case-form__list_item" key={item.id} onClick={this.itemClick} title={item.name}>{item.name}</li>
           ))}
         </ul>}
       </div>

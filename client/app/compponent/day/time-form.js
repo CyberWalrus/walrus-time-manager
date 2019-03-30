@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CaseForm from './case-form';
 import './time-form.scss';
 
 export default class TimeForm extends React.Component {
+  static propTypes = {
+    time: PropTypes.any.isRequired,
+    text: PropTypes.any.isRequired,
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +22,7 @@ export default class TimeForm extends React.Component {
           {this.state.time}
         </div>
         <div className="time-form_item">
-          <CaseForm title="test"/>
+          <CaseForm title="test" />
         </div>
       </div>
     );
