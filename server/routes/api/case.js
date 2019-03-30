@@ -1,68 +1,42 @@
-const Counter = require('../../models/counter');
+const CaseList = require('../../models/case-list');
 
 module.exports = (app) => {
-  app.get('/api/counters', (req, res, next) => {
-    Counter.find()
+  app.get('/api/caselist', (req, res, next) => {
+    CaseList.find()
       .exec()
-      .then((counter) => res.json(counter))
+      .then((caselist) => res.json(caselist))
       .catch((err) => next(err));
   });
 
-  app.post('/api/counters', function (req, res, next) {
-    let counter = new Counter();
+  app.post('/api/caselist', function (req, res, next) {
+    let caselist = new CaseList();
     const {body} = req;
     const {name} = body;
-    counter.name = name;
+    caselist.name = name;
 
-    counter.save()
-      .then(() => res.json(counter))
+    caselist.save()
+      .then(() => res.json(caselist))
       .catch((err) => next(err));
   });
 
-  app.delete('/api/counters/:id', function (req, res, next) {
-    Counter.findOneAndRemove({_id: req.params.id})
+  app.delete('/api/caselist/:id', function (req, res, next) {
+    CaseList.findOneAndRemove({_id: req.params.id})
       .exec()
-      .then((counter) => res.json())
+      .then((caselist) => res.json())
       .catch((err) => next(err));
   });
 
-  app.put('/api/counters/:id/increment', (req, res, next) => {
-    Counter.findById(req.params.id)
-      .exec()
-      .then((counter) => {
-        counter.count++;
-
-        counter.save()
-          .then(() => res.json(counter))
-          .catch((err) => next(err));
-      })
-      .catch((err) => next(err));
-  });
-
-  app.put('/api/counters/:id/decrement', (req, res, next) => {
-    Counter.findById(req.params.id)
-      .exec()
-      .then((counter) => {
-        counter.count--;
-
-        counter.save()
-          .then(() => res.json(counter))
-          .catch((err) => next(err));
-      })
-      .catch((err) => next(err));
-  });
-
-  app.post('/api/counters/:id/changename', (req, res, next) => {
+  app.post('/api/caselist/:id/changename', (req, res, next) => {
     const {body} = req;
     const {name} = body;
 
-    Counter.findById(req.params.id)
+    CaseList.findById(req.params.id)
       .exec()
-      .then((counter) => {
-        counter.name = name;
+      .then((caselist) => {
+        caselist.name = name;
 
-        counter.save()
-          .then(() => res.json(counter))
+        caselist.save()
+          .then(() => res.json(caselist))
           .catch((err) => next(err));
       })
       .catch((err) => next(err));

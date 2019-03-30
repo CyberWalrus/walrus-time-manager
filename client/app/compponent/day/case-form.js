@@ -10,7 +10,7 @@ export default class CaseForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      counters: [],
+      caselist: [],
       listOpen: false,
       headerTitle: this.props.title,
       valueInput: this.props.title
@@ -20,13 +20,14 @@ export default class CaseForm extends React.Component {
     this.inputChange = this.inputChange.bind(this);
     this.itemClick = this.itemClick.bind(this);
     this.inputAccept = this.inputAccept.bind(this);
+    this.itemDelete = this.itemDelete.bind(this);
   }
   componentDidMount() {
-    fetch('/api/counters')
+    fetch('/api/caselist')
       .then(res => res.json())
       .then(json => {
         this.setState({
-          counters: json
+          caselist: json
         });
       });
   }
@@ -46,12 +47,51 @@ export default class CaseForm extends React.Component {
     });
   }
   inputAccept(event) {
+    let name = this.state.valueInput;
+    fetch(`/api/caselist`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name
+      })
+    }).then(res => res.json())
+      .then(json => {
+        let data = this.state.caselist;
+        data.push(json);
+
+        this.setState({
+          caselist: data
+        });
+      });
   }
-  itemClick(evet){
+  itemDelete(index) {
+    const id = this.state.caselist[index]._id;
+
+    fetch(`/api/caselist/${id}`, { method: 'DELETE' })
+      .then(_ => {
+        this._modifyCaseList(index, null);
+      });
+  }
+  itemClick(evet) {
     this.setState({
-      valueInput: event.target.title,      
+      valueInput: event.target.title,
       listOpen: false
     })
+  }
+  _modifyCaseList(index, data) {
+    let prevData = this.state.caselist;
+
+    if (data) {
+      prevData[index] = data;
+    } else {
+      prevData.splice(index, 1);
+    }
+
+    this.setState({
+      caselist: prevData
+    });
   }
   render() {
     const {listOpen, headerTitle} = this.state
@@ -62,8 +102,9 @@ export default class CaseForm extends React.Component {
         </div>
         <button onClick={this.inputAccept}>v</button>
         {listOpen && <ul className="case-form__list">
-          {this.state.counters.map((item) => (
-            <li className="case-form__list_item" key={item.id} onClick={this.itemClick} title={item.name}>{item.name}</li>
+          {this.state.caselist.map((item, i) => (
+            <li className="case-form__list_item" key={i} onClick={this.itemClick} title={item.name}>{item.name}
+              <button onClick={() => this.itemDelete(i)}>v</button></li>
           ))}
         </ul>}
       </div>
