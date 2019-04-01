@@ -32,7 +32,7 @@ class User extends React.Component {
       signUpPassword,
       signUpPasswordre,
       signUpFirstName,
-      signUpLastName } = this.state;
+      signUpLastName} = this.state;
     this.state.signUpLogin = '';
     this.state.signUpEmail = '';
     this.state.signUpPassword = '';
@@ -70,39 +70,39 @@ class User extends React.Component {
           <input type="text"
             placeholder="Login"
             value={this.state.signUpLogin}
-            onChange={(e) => this.setState({ signUpLogin: e.target.value })} />
+            onChange={(e) => this.setState({signUpLogin: e.target.value})} />
         </div>
         <div>
-          <input type="text"
+          <input
             placeholder="Password"
             type="password"
             value={this.state.signUpPassword}
-            onChange={(e) => this.setState({ signUpPassword: e.target.value })} />
+            onChange={(e) => this.setState({signUpPassword: e.target.value})} />
         </div>
         <div>
-          <input type="text"
+          <input
             placeholder="Password"
             type="password"
             value={this.state.signUpPasswordre}
-            onChange={(e) => this.setState({ signUpPasswordre: e.target.value })} />
+            onChange={(e) => this.setState({signUpPasswordre: e.target.value})} />
         </div>
         <div>
           <input type="text"
             placeholder="Email"
             value={this.state.signUpEmail}
-            onChange={(e) => this.setState({ signUpEmail: e.target.value })} />
+            onChange={(e) => this.setState({signUpEmail: e.target.value})} />
         </div>
         <div>
           <input type="text"
             placeholder="First Name"
             value={this.state.signUpFirstName}
-            onChange={(e) => this.setState({ signUpFirstName: e.target.value })} />
+            onChange={(e) => this.setState({signUpFirstName: e.target.value})} />
         </div>
         <div>
           <input type="text"
             placeholder="Last Name"
             value={this.state.signUpLastName}
-            onChange={(e) => this.setState({ signUpLastName: e.target.value })} />
+            onChange={(e) => this.setState({signUpLastName: e.target.value})} />
         </div>
         <div>
           <button onClick={this.newUser}>New User</button>
@@ -121,6 +121,6 @@ class User extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default User;

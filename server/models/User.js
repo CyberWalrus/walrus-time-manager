@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 const UserRole = require('../models/UserRole');
 
 const UserSchema = new mongoose.Schema({
-  login: {
+  nickName: {
     type: String,
     default: ""
   },
-  loginSign: {
+  login: {
     type: String,
     default: ""
   },

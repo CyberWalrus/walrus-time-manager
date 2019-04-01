@@ -1,14 +1,26 @@
 import React from 'react';
 import TimeForm from './time-form';
+import './day.scss'
 
 export default class Day extends React.Component {
   constructor(props) {
     super(props);
-    this.state ={
+    this.state = {
       days: [],
-      day: new Date().toISOString().substring(0,10)
+      day: new Date().toISOString().substring(0, 10),
+      timeInterval: 1,
     }
-    this.dayAdd = this.dayAdd.bind(this)
+    this.dayAdd = this.dayAdd.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount() {
+    fetch(`/api/day`)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          days: json
+        });
+      });
   }
   dayAdd(event) {
     let date = new Date(this.state.day);
@@ -30,25 +42,22 @@ export default class Day extends React.Component {
         });
       });
   }
+  handleChange(key, event) {
+    this.setState({[key]: event.target.value});
+  }
   render() {
+    console.log(this.state.days);
     return (
-      <div>
-        <input type="date" value={this.state.day}/>
-        <input type="date" value={this.state.day}/>
+      <>
+        <input type="date" value={this.state.day} />
+        <input type="number" value={this.state.timeInterval} onInput={this.handleChange.bind(this, 'timeInterval')} pattern="[1-9]*" />
         <button onClick={this.dayAdd} >+</button>
-        {(() => {
-          const timeForms = [];
-          for (let i = 0; i <= 23; i++) {
-            let date = new Date(null);
-            date.setHours(i);
-            const time = date.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")
-            timeForms.push(
-              <TimeForm time={time} text={i} key={i}></TimeForm>
-            )
-          }
-          return timeForms;
-        })()}
-      </div>
+        <div className="day-form">
+          {this.state.days[0] ? this.state.days[0].times.map((day, i) => (
+            <TimeForm time={new Date(day.time).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")} text={i} key={i}></TimeForm>
+          )) : <> </>}
+        </div>
+      </>
     );
   }
 }

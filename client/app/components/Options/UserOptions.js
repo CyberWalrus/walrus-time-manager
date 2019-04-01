@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import 'whatwg-fetch';
 import DropDownUserRole from '../DropdDown/DropDownUserRole';
 
@@ -37,29 +37,28 @@ class UserOptions extends Component {
         });
       });
   }
-  handleListChange(index, event, key) {
+  handleListChange(index, key, event) {
     let users = this.state.users.slice(); // Make a copy of the emails first.
     users[index][key] = event.target.value; // Update it with the modified email.
-    this.setState({ users: users }); // Update the state.
-    this.changeNameCounter(index);
+    this.setState({users: users}); // Update the state.
+    this.changeUser(index);
   }
   handleUserRoleListChange(index, value) {
     let users = this.state.users.slice(); // Make a copy of the emails first.
     users[index].userRole = value; // Update it with the modified email.
-    this.setState({ users: users }); // Update the state.
+    this.setState({users: users}); // Update the state.
     this.changeUser(index);
   }
   handleChange(key, event) {
-    this.setState({ [key]: event.target.value }); // Update the state.
+    this.setState({[key]: event.target.value}); // Update the state.
   }
   handleUserRole(value) {
-    this.setState({ userRole: value }); // Update the state.
+    this.setState({userRole: value}); // Update the state.
   }
 
   changeUser(index) {
     const id = this.state.users[index]._id;
-    const login = this.state.users[index].login;
-    const userRole = this.state.users[index].userRole;
+    const user = this.state.users[index];
     // Post request to backend
     fetch(`/api/options/user/${id}/change`, {
       method: 'POST',
@@ -67,8 +66,7 @@ class UserOptions extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        label: login,
-        userRole: userRole
+        user: user
       }),
     })
       .then(res => res.json())
@@ -82,9 +80,11 @@ class UserOptions extends Component {
     const url = this.state.url;
     const idx = this.state.newindex;
     const userRoleId = this.state.userRoleId;
-    this.state.label = '';
-    this.state.url = '';
-    this.state.newindex = '';
+    this.setState({
+      label: ``,
+      url: ``,
+      newindex: ``
+    });
     // Post request to backend
     fetch(`/api/options/user/create`, {
       method: 'POST',
@@ -111,7 +111,7 @@ class UserOptions extends Component {
   onIsDeleted(index) {
     const id = this.state.users[index]._id;
 
-    fetch(`/api/options/user/${id}/isdeleted`, { method: 'PUT' })
+    fetch(`/api/options/user/${id}/isdeleted`, {method: 'PUT'})
       .then(res => res.json())
       .then(json => {
         this.__modifyUser(index, json);
@@ -121,7 +121,7 @@ class UserOptions extends Component {
   deletedUser(index) {
     const id = this.state.users[index]._id;
 
-    fetch(`/api/options/user/${id}/deleted`, { method: 'DELETE' })
+    fetch(`/api/options/user/${id}/deleted`, {method: 'DELETE'})
       .then(_ => {
         this.__modifyUser(index, null);
       });
@@ -149,6 +149,11 @@ class UserOptions extends Component {
         <ul>
           {this.state.users.map((user, i) => (
             <li key={i}>
+              <span>
+                <input type="text"
+                  value={user.nickName}
+                  onChange={this.handleListChange.bind(this, i, 'nickName')} />
+              </span>
               <span>
                 <input type="text"
                   value={user.login}

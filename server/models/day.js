@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 const DaySchema = new mongoose.Schema({
-  date:{
+  date: {
+    type: Date
+  },
+  times: [
+    {
+      time: {
+        type: Date
+      }
+    }
+  ],
+  timeStart: {
     type: Date
   },
   created: {

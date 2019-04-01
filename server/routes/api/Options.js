@@ -104,13 +104,12 @@ module.exports = (app) => {
 
   app.post('/api/options/user/:id/change', (req, res, next) => {
     const {body} = req;
-    const {login, userRole} = body;
+    const userOld = body.user;
 
     User.findById(req.params.id)
       .exec()
       .then((user) => {
-        user.login = login;
-        user.userRole = userRole;
+        Object.assign(user, userOld);
 
         user.save()
           .then(() => res.json(user))
