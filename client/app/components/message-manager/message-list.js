@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import MessageManager from './MessageManager';
+import MessageManager from './message-manager';
 
 export default class MessageList extends Component {
   constructor(props) {

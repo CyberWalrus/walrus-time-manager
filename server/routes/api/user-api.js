@@ -1,7 +1,7 @@
 
-const User = require('../../models/User');
-const UserSession = require('../../models/UserSession');
-const Counter = require('../../models/counter');
+const User = require('../../models/user-db');
+const UserSession = require('../../models/user-session-db');
+const Counter = require('../../models/counter-db');
 
 module.exports = (app) => {
 
@@ -45,9 +45,9 @@ module.exports = (app) => {
         message: 'Error: Password cannot be blank.'
       });
     }
-    email = email.toLowerCase();
+    email = email.toLowerTask();
     email = email.trim();
-    login = login.toLowerCase();
+    login = login.toLowerTask();
     login = login.trim();
     User.find({
       email: email,
@@ -79,7 +79,7 @@ module.exports = (app) => {
   });
 
   app.post('/api/account/test', (req, res, next) => {
-    message = 'test';
+    let message = 'test';
     res.json(message);
   });
   /*
@@ -125,9 +125,9 @@ module.exports = (app) => {
         message: 'Error: Password cannot be blank.'
       });
     }
-    email = email.toLowerCase();
+    email = email.toLowerTask();
     email = email.trim();
-    let loginSign = login.toLowerCase();
+    let loginSign = login.toLowerTask();
     loginSign = loginSign.trim();
     // Steps:
     // 1. Verify email doesn't exist
@@ -189,7 +189,7 @@ module.exports = (app) => {
         message: 'Error: Password cannot be blank.'
       });
     }
-    email = email.toLowerCase();
+    email = email.toLowerTask();
     email = email.trim();
     User.find({
       email: email

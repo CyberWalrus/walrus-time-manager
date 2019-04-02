@@ -1,7 +1,7 @@
-const Menu = require('../../models/Menu');
-const User = require('../../models/User');
-const UserRole = require('../../models/UserRole');
-const {findLastValue, takeMasiv} = require('../../utils/FindFunctions')
+const Menu = require('../../models/menu-db');
+const User = require('../../models/user-db');
+const UserRole = require('../../models/user-role-db');
+const {findLastValue, takeMasiv} = require('../../utils/find-functions')
 
 module.exports = (app) => {
 
@@ -122,7 +122,7 @@ module.exports = (app) => {
     User.findById(req.params.id)
       .exec()
       .then((user) => {
-        user.isDeleted = !(menu.isDeleted);
+        user.isDeleted = !(user.isDeleted);
 
         user.save()
           .then(() => res.json(user))

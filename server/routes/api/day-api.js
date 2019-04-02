@@ -1,4 +1,4 @@
-const Day = require('../../models/day');
+const Day = require('../../models/day-db');
 
 module.exports = (app) => {
   app.get('/api/day', (req, res, next) => {

@@ -1,7 +1,7 @@
-const Menu = require('../../models/Menu');
-const UserSession = require('../../models/UserSession');
-const UserRole = require('../../models/UserRole');
-const User = require('../../models/User');
+const Menu = require('../../models/menu-db');
+const UserSession = require('../../models/user-session-db');
+const UserRole = require('../../models/user-role-db');
+const User = require('../../models/user-db');
 
 
 module.exports = (app) => {

@@ -1,6 +1,6 @@
-const Message = require('../../models/Message');
-const MessageBoard = require('../../models/MessageBoard');
-const MessageList = require('../../models/MessageList');
+const Message = require('../../models/message-db');
+const MessageBoard = require('../../models/message-board-db');
+const MessageList = require('../../models/message-list-db');
 
 module.exports = (app) => {
   app.get('/api/messageboards', (req, res, next) => {

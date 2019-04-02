@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CaseForm from './case-form';
+import TaskForm from './task-form';
 import {msToString} from '../../utils/storage';
 import './time-form.scss';
 
@@ -24,7 +24,7 @@ export default class TimeForm extends React.Component {
           {msToString(time.timeStart)}
         </div>
         <div className="time-form_item">
-          <CaseForm caseId={time.caseId} />
+          <TaskForm taskId={time.taskId} />
         </div>
       </div>
     );

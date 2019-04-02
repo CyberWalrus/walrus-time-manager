@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import Menu from '../Header/Menu';
-import Footer from '../Footer/Footer';
+import Menu from '../header/menu';
+import Footer from '../footer/footer';
 import {
   BrowserRouter as Router,
   Route,
@@ -9,18 +9,19 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import NotFound from '../App/NotFound';
+import NotFound from './not-found';
 
-import Home from '../Home/Home';
+import Home from '../home/home';
 
-import HelloWorld from '../HelloWorld/HelloWorld';
-import Login from '../User/Login';
-import SignUp from '../User/SignUp';
-import MenuOptions from '../Options/MenuOptions';
-import UserRoleOptions from '../Options/UserRoleOptions';
-import UserOptions from '../Options/UserOptions';
-import PrivateRoute from '../Routes/PrivateRoute';
-import MessageManager from '../MessageManager/MessageManager';
+import HelloWorld from '../HelloWorld/hello-world';
+import Login from '../User/login';
+import Day from "../day/day";
+import SignUp from '../User/sign-up';
+import MenuOptions from '../options/menu-options';
+import UserRoleOptions from '../options/user-role-options';
+import UserOptions from '../options/user-options';
+import PrivateRoute from '../routes/private-route';
+import MessageManager from '../message-manager/message-manager';
 import {
   getFromStorage,
   setInStorage,
@@ -130,13 +131,9 @@ export default class App extends React.Component {
       return (<div><p>Loading...</p></div>);
     } else {
       //console.log(getFromStorage('walrus_session'));
-      this.setState({
-        usersession: getFromStorage('walrus_session')
-      });
+      this.state.usersession = getFromStorage('walrus_session');
       if (this.state.usersession) {
-        this.setState({
-          isActive: this.state.usersession.isActive
-        });
+        this.state.isActive = this.state.usersession.isActive;
       }
       if (!this.state.isActive) {
         return (
@@ -161,6 +158,7 @@ export default class App extends React.Component {
             <Switch>
               <PrivateRoute exact path="/" component={Home} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole('/')} />
               <PrivateRoute path="/helloworld" component={HelloWorld} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole('/helloworld')} />
+              <PrivateRoute path="/day" component={Day} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole('/day')} />
               <PrivateRoute path="/options/menu" component={MenuOptions} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole('/options/menu')} />
               <PrivateRoute path="/options/user" component={UserOptions} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole('/options/user')} />
               <PrivateRoute path="/options/userrole" component={UserRoleOptions} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole('/options/userrole')} />

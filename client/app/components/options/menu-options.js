@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import DropDownUserRole from '../DropdDown/DropDownUserRole';
+import DropDownUserRole from '../drop-down/drop-down-user-role';
 
 class MenuOptions extends Component {
   constructor(props) {
@@ -70,11 +70,11 @@ class MenuOptions extends Component {
   handleURL(event) {
     this.setState({ url: event.target.value }); // Update the state.
   }
-  handleIndex(event) {    
+  handleIndex(event) {
     this.setState({ newindex: event.target.value }); // Update the state.
   }
   handleUserRole(value) {
-    this.setState({ userRole: value }); 
+    this.setState({ userRole: value });
   }
 
   changeMenu(index) {

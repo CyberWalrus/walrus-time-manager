@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const CaseListSchema = new mongoose.Schema({
+const TaskListSchema = new mongoose.Schema({
   name: {
     type: String,
     default: ''
@@ -13,4 +13,4 @@ const CaseListSchema = new mongoose.Schema({
     default: true
   }
 });
-module.exports = mongoose.model('CaseList', CaseListSchema);
+module.exports = mongoose.model('TaskList', TaskListSchema);

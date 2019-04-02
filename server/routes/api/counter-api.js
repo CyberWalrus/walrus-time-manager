@@ -1,4 +1,4 @@
-const Counter = require('../../models/counter');
+const Counter = require('../../models/counter-db');
 
 module.exports = (app) => {
   app.get('/api/counters', (req, res, next) => {

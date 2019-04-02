@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const CaseSchema = new mongoose.Schema({
+const TaskSchema = new mongoose.Schema({
   value: {
     type: String,
     default: ''
   },
-  caseListId: {
+  taskListId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'CaseList'
+    ref: 'TaskList'
   },
   dayId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,4 +21,4 @@ const CaseSchema = new mongoose.Schema({
     default: true
   }
 });
-module.exports = mongoose.model('Case', CaseSchema);
+module.exports = mongoose.model('Task', TaskSchema);

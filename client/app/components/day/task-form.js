@@ -1,21 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./case-form.scss";
+import "./task-form.scss";
 
-export default class CaseForm extends React.Component {
+export default class TaskForm extends React.Component {
   static propTypes = {
-    caseId: null
+    taskId: null
   }
   constructor(props) {
     super(props)
     this.state = {
-      caselist: [],
-      caseId: this.props.caseId,
-      case: {},
+      tasklist: [],
+      taskId: this.props.taskId,
+      task: {},
       id: ``,
       listOpen: false,
-      headerTitle: this.props.caseId,
-      valueInput: this.props.caseId
+      headerTitle: this.props.taskId,
+      valueInput: this.props.taskId
     }
     this.toggleList = this.toggleList.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -25,19 +25,19 @@ export default class CaseForm extends React.Component {
     this.itemDelete = this.itemDelete.bind(this);
   }
   componentDidMount() {
-    fetch(`/api/caselist`)
+    fetch(`/api/tasklist`)
       .then(res => res.json())
       .then(json => {
         this.setState({
-          caselist: json
+          tasklist: json
         });
       });
-    if (this.state.caseId != null) {
-      fetch(`/api/case/${this.state.caseId}`)
+    if (this.state.taskId != null) {
+      fetch(`/api/task/${this.state.taskId}`)
         .then(res => res.json())
         .then(json => {
           this.setState({
-            case: json
+            task: json
           });
         });
     }
@@ -59,7 +59,7 @@ export default class CaseForm extends React.Component {
   }
   inputAccept(event) {
     let name = this.state.valueInput;
-    fetch(`/api/caselist`, {
+    fetch(`/api/tasklist`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -69,20 +69,20 @@ export default class CaseForm extends React.Component {
       })
     }).then(res => res.json())
       .then(json => {
-        let data = this.state.caselist;
+        let data = this.state.tasklist;
         data.push(json);
 
         this.setState({
-          caselist: data
+          tasklist: data
         });
       });
   }
   itemDelete(index) {
-    const id = this.state.caselist[index]._id;
+    const id = this.state.tasklist[index]._id;
 
-    fetch(`/api/caselist/${id}`, {method: `DELETE`})
+    fetch(`/api/tasklist/${id}`, {method: `DELETE`})
       .then(_ => {
-        this._modifyCaseList(index, null);
+        this._modifyTaskList(index, null);
       });
   }
   itemClick(evet) {
@@ -91,8 +91,8 @@ export default class CaseForm extends React.Component {
       listOpen: false
     })
   }
-  _modifyCaseList(index, data) {
-    let prevData = this.state.caselist;
+  _modifyTaskList(index, data) {
+    let prevData = this.state.tasklist;
 
     if (data) {
       prevData[index] = data;
@@ -101,20 +101,20 @@ export default class CaseForm extends React.Component {
     }
 
     this.setState({
-      caselist: prevData
+      tasklist: prevData
     });
   }
   render() {
     const {listOpen, headerTitle} = this.state
     return (
-      <div className="case-form" >
-        <div className="case-form__header" onClick={this.toggleList} >
-          <input className="case-form__header_input" value={this.state.valueInput} onInput={this.inputChange}></input>
+      <div className="task-form" >
+        <div className="task-form__header" onClick={this.toggleList} >
+          <input className="task-form__header_input" value={this.state.valueInput} onInput={this.inputChange}></input>
           <button onClick={this.inputAccept}>v</button>
         </div>
-        {listOpen && <ul className="case-form__list">
-          {this.state.caselist.map((item, i) => (
-            <li className="case-form__list_item" key={i} onClick={this.itemClick} title={item.name}>{item.name}
+        {listOpen && <ul className="task-form__list">
+          {this.state.tasklist.map((item, i) => (
+            <li className="task-form__list_item" key={i} onClick={this.itemClick} title={item.name}>{item.name}
               <button onClick={() => this.itemDelete(i)}>v</button></li>
           ))}
         </ul>}

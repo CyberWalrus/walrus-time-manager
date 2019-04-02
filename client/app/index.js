@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 import { IntlProvider } from "react-intl";
 
-import App from './components/App/app-new';
+import App from './components/App/app';
 
 import './styles/styles.scss';
 import messages_ru from "./translations/ru.json";

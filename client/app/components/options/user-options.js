@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
-import DropDownUserRole from '../DropdDown/DropDownUserRole';
+import DropDownUserRole from '../drop-down/drop-down-user-role';
 
 class UserOptions extends Component {
   constructor(props) {
