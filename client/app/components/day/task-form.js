@@ -4,7 +4,8 @@ import "./task-form.scss";
 
 export default class TaskForm extends React.Component {
   static propTypes = {
-    "taskId": null
+    "taskId": null,
+    "dayId": Object
   }
   constructor(props) {
 
@@ -16,7 +17,8 @@ export default class TaskForm extends React.Component {
       "id": ``,
       "listOpen": false,
       "headerTitle": this.props.taskId,
-      "valueInput": this.props.taskId
+      "valueInput": ``,
+      "dayId": this.props.dayId
     };
     this.toggleList = this.toggleList.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -49,8 +51,25 @@ export default class TaskForm extends React.Component {
 
         });
 
+      const value = this.state.tasklist.find((element, index, array) => {
+
+        return element._id === this.state.task.taskListId;
+
+      });
+      this.setState({
+        "valueInput": value.name
+      });
+
+    } else {
+
+      this.setState({
+        "valueInput": `ne zadanno`
+      });
+
     }
 
+  }
+  takeValueTask(value) {
   }
   handleClickOutside() {
 
@@ -95,6 +114,37 @@ export default class TaskForm extends React.Component {
         });
 
       });
+    if (this.state.taskId !== null) {
+
+      console.log(`??`);
+
+    } else {
+
+      const task = {
+        "taskListId": this.state.tasklist[0]._id,
+        "dayId": this.state.dayId
+      };
+      fetch(`/api/task`, {
+        "method": `POST`,
+        "headers": {
+          'Content-Type': `application/json`
+        },
+        "body": JSON.stringify({
+          "taskNew": task
+        })
+      }).then(res => res.json())
+        .then(json => {
+
+          let data = json;
+
+          this.setState({
+            "task": data,
+            "taskId": data._id
+          });
+
+        });
+
+    }
 
   }
   itemDelete(index) {
@@ -143,7 +193,7 @@ export default class TaskForm extends React.Component {
       <div className="task-form" >
         <div className="task-form__header" onClick={this.toggleList} >
           <input className="task-form__header_input" value={this.state.valueInput} onInput={this.inputChange}></input>
-          <button onClick={this.inputAccept}>v</button>
+          <button onClick={this.inputAccept}>s</button>
         </div>
         {listOpen && <ul className="task-form__list">
           {this.state.tasklist.map((item, i) => (

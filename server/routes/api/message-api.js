@@ -3,14 +3,18 @@ const MessageBoard = require(`../../models/message-board-db`);
 const MessageList = require(`../../models/message-list-db`);
 
 module.exports = (app) => {
+
   app.get(`/api/messageboards`, (req, res, next) => {
+
     MessageBoard.find()
       .exec()
       .then((messageboard) => res.json(messageboard))
       .catch((err) => next(err));
+
   });
 
   app.post(`/api/messageboards/add`, function (req, res, next) {
+
     let messageboard = new Message();
     const {body} = req;
     const {value} = body;
@@ -19,16 +23,20 @@ module.exports = (app) => {
     messageboard.save()
       .then(() => res.json(messageboard))
       .catch((err) => next(err));
+
   });
 
   app.get(`/api/messagelists`, (req, res, next) => {
+
     MessageList.find()
       .exec()
       .then((messagelist) => res.json(messagelist))
       .catch((err) => next(err));
+
   });
 
   app.post(`/api/messagelists/add`, function (req, res, next) {
+
     let messagelist = new MessageList();
     const {body} = req;
     const {value} = body;
@@ -37,17 +45,21 @@ module.exports = (app) => {
     messagelist.save()
       .then(() => res.json(messagelist))
       .catch((err) => next(err));
+
   });
   app.get(`/api/messages/:id`, (req, res, next) => {
+
     Message.find({
-      messageList: req.params.id
+      "messageList": req.params.id
     })
       .exec()
       .then((message) => res.json(message))
       .catch((err) => next(err));
+
   });
 
   app.post(`/api/messages/:id/add`, function (req, res, next) {
+
     let message = new Message();
     const {body} = req;
     const {value} = body;
@@ -56,5 +68,7 @@ module.exports = (app) => {
     message.save()
       .then(() => res.json(message))
       .catch((err) => next(err));
+
   });
+
 };

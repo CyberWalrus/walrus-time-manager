@@ -67,7 +67,7 @@ export default class Day extends React.Component {
         <button onClick={this.dayAdd} >+</button>
         <div className="day-form">
           {this.state.days[0] ? this.state.days[0].times.map((time, i) => (
-            <TimeForm time={time} text={i} key={i}></TimeForm>
+            <TimeForm time={time} dayId={this.state.days[0]._id} text={i} key={i}></TimeForm>
           )) : <> </>}
         </div>
       </>

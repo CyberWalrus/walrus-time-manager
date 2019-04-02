@@ -7,7 +7,8 @@ import './time-form.scss';
 export default class TimeForm extends React.Component {
   static propTypes = {
     "time": Object,
-    "text": null
+    "text": null,
+    "dayId": Object
   }
   constructor(props) {
 
@@ -15,6 +16,7 @@ export default class TimeForm extends React.Component {
     this.state = {
       "time": this.props.time,
       "text": this.props.text,
+      "dayId": this.props.dayId,
     };
 
   }
@@ -27,7 +29,7 @@ export default class TimeForm extends React.Component {
           {msToString(time.timeStart)}
         </div>
         <div className="time-form_item">
-          <TaskForm taskId={time.taskId} />
+          <TaskForm taskId={time.taskId} dayId={this.state.dayId}/>
         </div>
       </div>
     );
