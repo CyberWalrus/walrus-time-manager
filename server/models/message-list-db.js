@@ -1,24 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const MessageListSchema = new mongoose.Schema({
-  value: {
-    type: String,
-    default: ''
+  "value": {
+    "type": String,
+    "default": ``
   },
-  mmessageBoard: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'MessageBoard'
+  "mmessageBoard": {
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": `MessageBoard`
   },
-  createdUserId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+  "createdUserId": {
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": `User`
   },
-  created: {
-    type: Date,
-    default: Date.now
+  "created": {
+    "type": Date,
+    "default": Date.now
   },
-  isActive: {
-    type: Boolean,
-    default: true
+  "isActive": {
+    "type": Boolean,
+    "default": true
   }
 });
-module.exports = mongoose.model('MessageList', MessageListSchema);
+module.exports = mongoose.model(`MessageList`, MessageListSchema);

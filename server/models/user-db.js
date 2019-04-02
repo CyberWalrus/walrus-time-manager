@@ -1,35 +1,35 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const UserRole = require('./user-role-db');
+const mongoose = require(`mongoose`);
+const bcrypt = require(`bcrypt`);
+const UserRole = require(`./user-role-db`);
 
 const UserSchema = new mongoose.Schema({
   nickName: {
     type: String,
-    default: ""
+    default: ``
   },
   login: {
     type: String,
-    default: ""
+    default: ``
   },
   firstName: {
     type: String,
-    default: ""
+    default: ``
   },
   lastName: {
     type: String,
-    default: ""
+    default: ``
   },
   email: {
     type: String,
-    default: ""
+    default: ``
   },
   password: {
     type: String,
-    default: ""
+    default: ``
   },
   userRole: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserRole'
+    ref: `UserRole`
   }],
   isActive: {
     type: Boolean,
@@ -52,4 +52,4 @@ UserSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model(`User`, UserSchema);

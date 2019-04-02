@@ -1,24 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const TaskSchema = new mongoose.Schema({
-  value: {
-    type: String,
-    default: ''
+  "value": {
+    "type": String,
+    "default": ``
   },
-  taskListId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'TaskList'
+  "taskListId": {
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": `TaskList`
   },
-  dayId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Day'
+  "dayId": {
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": `Day`
   },
-  created: {
-    type: Number,
-    default: new Date().getTime()
+  "created": {
+    "type": Number,
+    "default": new Date().getTime()
   },
-  isActive: {
-    type: Boolean,
-    default: true
+  "isActive": {
+    "type": Boolean,
+    "default": true
   }
 });
-module.exports = mongoose.model('Task', TaskSchema);
+module.exports = mongoose.model(`Task`, TaskSchema);

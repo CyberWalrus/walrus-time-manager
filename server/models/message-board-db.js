@@ -1,20 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const MessageBoardSchema = new mongoose.Schema({
-  value: {
-    type: String,
-    default: ''
+  "value": {
+    "type": String,
+    "default": ``
   },
-  createdUserId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+  "createdUserId": {
+    "type": mongoose.Schema.Types.ObjectId,
+    "ref": `User`
   },
-  created: {
-    type: Date,
-    default: Date.now
+  "created": {
+    "type": Date,
+    "default": Date.now
   },
-  isActive: {
-    type: Boolean,
-    default: true
+  "isActive": {
+    "type": Boolean,
+    "default": true
   }
 });
-module.exports = mongoose.model('MessageBoard', MessageBoardSchema);
+module.exports = mongoose.model(`MessageBoard`, MessageBoardSchema);

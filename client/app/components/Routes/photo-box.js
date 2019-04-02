@@ -1,15 +1,18 @@
 import React from 'react';
 import RoleAwareComponent from '../../../shared/authorization/RoleAwareComponent.react';
- 
+
 class PhotoBox extends RoleAwareComponent {
   constructor(props) {
+
     super(props);
- 
+
     // component will be visible for the roles below:
-    this.authorize = ['employee'];
+    this.authorize = [`employee`];
+
   }
- 
+
   render() {
+
     const jsx = (
       <div className="pure-u-13-24 box photo-box">
         <div className="box-wrapper">
@@ -18,9 +21,10 @@ class PhotoBox extends RoleAwareComponent {
         </div>
       </div>
     );
- 
+
     return this.shouldBeVisible() ? jsx : null;
+
   }
 }
- 
+
 export default PhotoBox;

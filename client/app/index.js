@@ -1,13 +1,13 @@
 import React from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Switch
-} from 'react-router-dom'
-import { IntlProvider } from "react-intl";
+} from 'react-router-dom';
+import {IntlProvider} from "react-intl";
 
 import App from './components/App/app';
 
@@ -27,4 +27,4 @@ render((
       <App />
     </Router>
   </IntlProvider>
-), document.getElementById('app'));
+), document.getElementById(`app`));

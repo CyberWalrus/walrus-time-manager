@@ -8,11 +8,11 @@ class UserOptions extends Component {
 
     this.state = {
       users: [],
-      login: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
+      login: ``,
+      firstName: ``,
+      lastName: ``,
+      email: ``,
+      password: ``,
       userRole: []
     };
 
@@ -29,7 +29,7 @@ class UserOptions extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/options/user')
+    fetch(`/api/options/user`)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -61,9 +61,9 @@ class UserOptions extends Component {
     const user = this.state.users[index];
     // Post request to backend
     fetch(`/api/options/user/${id}/change`, {
-      method: 'POST',
+      method: `POST`,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': `application/json`
       },
       body: JSON.stringify({
         user: user
@@ -87,9 +87,9 @@ class UserOptions extends Component {
     });
     // Post request to backend
     fetch(`/api/options/user/create`, {
-      method: 'POST',
+      method: `POST`,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': `application/json`
       },
       body: JSON.stringify({
         label: label,
@@ -111,7 +111,7 @@ class UserOptions extends Component {
   onIsDeleted(index) {
     const id = this.state.users[index]._id;
 
-    fetch(`/api/options/user/${id}/isdeleted`, {method: 'PUT'})
+    fetch(`/api/options/user/${id}/isdeleted`, {method: `PUT`})
       .then(res => res.json())
       .then(json => {
         this.__modifyUser(index, json);
@@ -121,7 +121,7 @@ class UserOptions extends Component {
   deletedUser(index) {
     const id = this.state.users[index]._id;
 
-    fetch(`/api/options/user/${id}/deleted`, {method: 'DELETE'})
+    fetch(`/api/options/user/${id}/deleted`, {method: `DELETE`})
       .then(_ => {
         this.__modifyUser(index, null);
       });
@@ -152,27 +152,27 @@ class UserOptions extends Component {
               <span>
                 <input type="text"
                   value={user.nickName}
-                  onChange={this.handleListChange.bind(this, i, 'nickName')} />
+                  onChange={this.handleListChange.bind(this, i, `nickName`)} />
               </span>
               <span>
                 <input type="text"
                   value={user.login}
-                  onChange={this.handleListChange.bind(this, i, 'login')} />
+                  onChange={this.handleListChange.bind(this, i, `login`)} />
               </span>
               <span>
                 <input type="text"
                   value={user.firstName}
-                  onChange={this.handleListChange.bind(this, i, 'firstName')} />
+                  onChange={this.handleListChange.bind(this, i, `firstName`)} />
               </span>
               <span>
                 <input type="text"
                   value={user.lastName}
-                  onChange={this.handleListChange.bind(this, i, 'lastName')} />
+                  onChange={this.handleListChange.bind(this, i, `lastName`)} />
               </span>
               <span>
                 <input type="text"
                   value={user.email}
-                  onChange={this.handleListChange.bind(this, i, 'email')} />
+                  onChange={this.handleListChange.bind(this, i, `email`)} />
               </span>
               <span>
                 <DropDownUserRole value={user.userRole} onChange={this.handleUserRoleListChange.bind(this, i)} />
@@ -188,27 +188,27 @@ class UserOptions extends Component {
           <span>
             <input type="text"
               value={this.state.login}
-              onChange={this.handleChange.bind(this, 'login')} />
+              onChange={this.handleChange.bind(this, `login`)} />
           </span>
           <span>
             <input type="text"
               value={this.state.firstName}
-              onChange={this.handleChange.bind(this, 'firstName')} />
+              onChange={this.handleChange.bind(this, `firstName`)} />
           </span>
           <span>
             <input type="text"
               value={this.state.lastName}
-              onChange={this.handleChange.bind(this, 'lastName')} />
+              onChange={this.handleChange.bind(this, `lastName`)} />
           </span>
           <span>
             <input type="text"
               value={this.state.email}
-              onChange={this.handleChange.bind(this, 'email')} />
+              onChange={this.handleChange.bind(this, `email`)} />
           </span>
           <span>
             <input type="text"
               value={this.state.password}
-              onChange={this.handleChange.bind(this, 'password')} />
+              onChange={this.handleChange.bind(this, `password`)} />
           </span>
           <span>
             <DropDownUserRole value={this.state.userRoleId} onChange={this.handleUserRole.bind(this)} />

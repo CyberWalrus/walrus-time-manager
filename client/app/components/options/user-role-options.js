@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import 'whatwg-fetch';
 
 class UserRoleOptions extends Component {
   constructor(props) {
+
     super(props);
 
     this.state = {
-      userroles: [],
-      name: ''
+      "userroles": [],
+      "name": ``
     };
 
     this.handleNameListChange = this.handleNameListChange.bind(this);
@@ -18,104 +19,134 @@ class UserRoleOptions extends Component {
     this.deletedUserRole = this.deletedUserRole.bind(this);
 
     this.__modifyUserRole = this.__modifyUserRole.bind(this);
+
   }
 
   componentDidMount() {
-    fetch('/api/options/userrole')
+
+    fetch(`/api/options/userrole`)
       .then(res => res.json())
       .then(json => {
+
         this.setState({
-          userroles: json
+          "userroles": json
         });
+
       });
+
   }
   handleNameListChange(index, event) {
+
     let userroles = this.state.userroles.slice();
     console.log(event.target); // Make a copy of the emails first.
     userroles[index].name = event.target.value; // Update it with the modified email.
-    this.setState({ userroles: userroles }); // Update the state.
+    this.setState({"userroles": userroles}); // Update the state.
     this.changeUserRole(index);
+
   }
   handleName(event) {
-    this.setState({ name: event.target.value }); // Update the state.
+
+    this.setState({"name": event.target.value}); // Update the state.
+
   }
   changeUserRole(index) {
+
     const id = this.state.userroles[index]._id;
     const name = this.state.userroles[index].name;
     // Post request to backend
     fetch(`/api/options/userrole/${id}/change`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+      "method": `POST`,
+      "headers": {
+        'Content-Type': `application/json`
       },
-      body: JSON.stringify({
-        name: name
+      "body": JSON.stringify({
+        "name": name
       }),
     })
       .then(res => res.json())
       .then(json => {
         //this.__modifyUserRole(index, json);
       });
+
   }
 
   createUserRole() {
+
     const name = this.state.name;
-    this.state.name = '';
+    this.state.name = ``;
     // Post request to backend
     fetch(`/api/options/userrole/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+      "method": `POST`,
+      "headers": {
+        'Content-Type': `application/json`
       },
-      body: JSON.stringify({
-        name: name
+      "body": JSON.stringify({
+        "name": name
       }),
     }).then(res => res.json())
       .then(json => {
+
         let data = this.state.userroles;
         data.push(json);
 
         this.setState({
-          userroles: data
+          "userroles": data
         });
+
       });
+
   }
 
   onIsDeleted(index) {
+
     const id = this.state.userroles[index]._id;
 
-    fetch(`/api/options/userrole/${id}/isdeleted`, { method: 'PUT' })
+    fetch(`/api/options/userrole/${id}/isdeleted`, {"method": `PUT`})
       .then(res => res.json())
       .then(json => {
+
         this.__modifyUserRole(index, json);
+
       });
+
   }
 
   deletedUserRole(index) {
+
     const id = this.state.userroles[index]._id;
 
-    fetch(`/api/options/userrole/${id}/deleted`, { method: 'DELETE' })
+    fetch(`/api/options/userrole/${id}/deleted`, {"method": `DELETE`})
       .then(_ => {
+
         this.__modifyUserRole(index, null);
+
       });
+
   }
 
   __modifyUserRole(index, data) {
+
     let prevData = this.state.userroles;
 
     if (data) {
+
       prevData[index] = data;
+
     } else {
+
       prevData.splice(index, 1);
+
     }
 
     this.setState({
-      userroles: prevData
+      "userroles": prevData
     });
+
   }
 
 
   render() {
+
     return (
       <>
         <p>UserRole Options:</p>
@@ -145,6 +176,7 @@ class UserRoleOptions extends Component {
         </div>
       </>
     );
+
   }
 }
 

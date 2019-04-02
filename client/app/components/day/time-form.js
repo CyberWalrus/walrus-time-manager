@@ -6,18 +6,21 @@ import './time-form.scss';
 
 export default class TimeForm extends React.Component {
   static propTypes = {
-    time: Object,
-    text: null
+    "time": Object,
+    "text": null
   }
   constructor(props) {
+
     super(props);
     this.state = {
-      time: this.props.time,
-      text: this.props.text,
-    }
+      "time": this.props.time,
+      "text": this.props.text,
+    };
+
   }
   render() {
-    const time = this.state.time
+
+    const time = this.state.time;
     return (
       <div className="time-form">
         <div className="time-form__time">
@@ -28,5 +31,6 @@ export default class TimeForm extends React.Component {
         </div>
       </div>
     );
+
   }
 }

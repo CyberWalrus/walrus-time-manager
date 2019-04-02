@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const DayTimeSchema = new mongoose.Schema({
   dayId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Day'
+    ref: `Day`
   },
   time:{
     type: Date
@@ -16,4 +16,4 @@ const DayTimeSchema = new mongoose.Schema({
     default: true
   }
 });
-module.exports = mongoose.model('DayTime', DayTimeSchema);
+module.exports = mongoose.model(`DayTime`, DayTimeSchema);

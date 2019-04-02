@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import 'whatwg-fetch';
 
 import {
@@ -8,18 +8,19 @@ import {
 
 class SignIn extends Component {
   constructor(props) {
+
     super(props);
 
     this.state = {
-      isLoading: true,
-      token: '',
-      signUpError: '',
-      signInError: '',
-      signInEmail: '',
-      signInPassword: '',
-      signUpEmail: '',
-      signUpPassword: '',
-      usersession: {}
+      "isLoading": true,
+      "token": ``,
+      "signUpError": ``,
+      "signInError": ``,
+      "signInEmail": ``,
+      "signInPassword": ``,
+      "signUpEmail": ``,
+      "signUpPassword": ``,
+      "usersession": {}
     };
 
     this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(this);
@@ -30,60 +31,82 @@ class SignIn extends Component {
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.logout = this.logout.bind(this);
-    this.userSessionValues = this.userSessionValues.bind(this)
+    this.userSessionValues = this.userSessionValues.bind(this);
+
   }
 
   componentDidMount() {
-    const obj = getFromStorage('walrus_app');
+
+    const obj = getFromStorage(`walrus_app`);
     if (obj && obj.token) {
-      const { token } = obj;
+
+      const {token} = obj;
       // Verify token
-      fetch('/api/account/verify?token=' + token)
+      fetch(`/api/account/verify?token=` + token)
         .then(res => res.json())
         .then(json => {
+
           if (json.success) {
+
             this.setState({
               token,
-              isLoading: false
+              "isLoading": false
             });
+
           } else {
+
             this.setState({
-              isLoading: false,
+              "isLoading": false,
             });
+
           }
+
         });
+
     } else {
+
       this.setState({
-        isLoading: false,
+        "isLoading": false,
       });
+
     }
+
   }
 
   onTextboxChangeSignInEmail(event) {
+
     this.setState({
-      signInEmail: event.target.value,
+      "signInEmail": event.target.value,
     });
+
   }
 
   onTextboxChangeSignInPassword(event) {
+
     this.setState({
-      signInPassword: event.target.value,
+      "signInPassword": event.target.value,
     });
+
   }
 
   onTextboxChangeSignUpEmail(event) {
+
     this.setState({
-      signUpEmail: event.target.value,
+      "signUpEmail": event.target.value,
     });
+
   }
 
   onTextboxChangeSignUpPassword(event) {
+
     this.setState({
-      signUpPassword: event.target.value,
+      "signUpPassword": event.target.value,
     });
+
   }
 
   onSignUp() {
+
     // Grab state
     const {
       signUpEmail,
@@ -91,38 +114,46 @@ class SignIn extends Component {
     } = this.state;
 
     this.setState({
-      isLoading: true,
+      "isLoading": true,
     });
 
     // Post request to backend
-    fetch('/api/account/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    fetch(`/api/account/signup`, {
+      "method": `POST`,
+      "headers": {
+        'Content-Type': `application/json`
       },
-      body: JSON.stringify({
-        email: signUpEmail,
-        password: signUpPassword,
+      "body": JSON.stringify({
+        "email": signUpEmail,
+        "password": signUpPassword,
       }),
     }).then(res => res.json())
       .then(json => {
+
         if (json.success) {
+
           this.setState({
-            signUpError: json.message,
-            isLoading: false,
-            signUpEmail: '',
-            signUpPassword: '',
+            "signUpError": json.message,
+            "isLoading": false,
+            "signUpEmail": ``,
+            "signUpPassword": ``,
           });
+
         } else {
+
           this.setState({
-            signUpError: json.message,
-            isLoading: false,
+            "signUpError": json.message,
+            "isLoading": false,
           });
+
         }
+
       });
+
   }
 
   onSignIn() {
+
     // Grab state
     const {
       signInEmail,
@@ -130,87 +161,111 @@ class SignIn extends Component {
     } = this.state;
 
     this.setState({
-      isLoading: true,
+      "isLoading": true,
     });
 
     // Post request to backend
-    fetch('/api/account/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    fetch(`/api/account/signin`, {
+      "method": `POST`,
+      "headers": {
+        'Content-Type': `application/json`
       },
-      body: JSON.stringify({
-        email: signInEmail,
-        password: signInPassword,
+      "body": JSON.stringify({
+        "email": signInEmail,
+        "password": signInPassword,
       }),
     }).then(res => res.json())
       .then(json => {
+
         if (json.success) {
-          setInStorage('walrus_app', { token: json.token });
+
+          setInStorage(`walrus_app`, {"token": json.token});
           this.userSessionValues(json.token);
           this.setState({
-            signInError: json.message,
-            isLoading: false,
-            signInPassword: '',
-            signInEmail: '',
-            token: json.token,
+            "signInError": json.message,
+            "isLoading": false,
+            "signInPassword": ``,
+            "signInEmail": ``,
+            "token": json.token,
           });
+
         } else {
+
           this.setState({
-            signInError: json.message,
-            isLoading: false,
+            "signInError": json.message,
+            "isLoading": false,
           });
+
         }
+
       });
+
   }
 
   logout() {
+
     this.setState({
-      isLoading: true,
+      "isLoading": true,
     });
-    const obj = getFromStorage('walrus_app');
+    const obj = getFromStorage(`walrus_app`);
     if (obj && obj.token) {
-      const { token } = obj;
+
+      const {token} = obj;
       // Verify token
-      fetch('/api/account/logout?token=' + token)
+      fetch(`/api/account/logout?token=` + token)
         .then(res => res.json())
         .then(json => {
+
           if (json.success) {
+
             this.setState({
-              token: '',
-              isLoading: false
+              "token": ``,
+              "isLoading": false
             });
+
           } else {
+
             this.setState({
-              isLoading: false,
+              "isLoading": false,
             });
+
           }
+
         });
-        this.userSessionValues(token);
+      this.userSessionValues(token);
+
     } else {
+
       this.setState({
-        isLoading: false,
+        "isLoading": false,
       });
+
     }
+
   }
   userSessionValues(token) {      // Verify token
-      fetch('/api/app/logincheck?token=' + token)
-        .then(res => res.json())
-        .then(json => {
-          this.setState({
-            usersession: json[0]
-          });
-          console.log(this.state.usersession.isActive);
-          setInStorage('walrus_session', {
-            userRole: this.state.usersession.userRole,
-            userLogin: this.state.usersession.userLogin,
-            userId: this.state.usersession.userId,
-            isActive: this.state.usersession.isActive,
-          });
+
+    fetch(`/api/app/logincheck?token=` + token)
+      .then(res => res.json())
+      .then(json => {
+
+        this.setState({
+          "usersession": json[0]
         });
+        console.log(this.state.usersession.isActive);
+        setInStorage(`walrus_session`, {
+          "userRole": this.state.usersession.userRole,
+          "userLogin": this.state.usersession.userLogin,
+          "userId": this.state.usersession.userId,
+          "isActive": this.state.usersession.isActive,
+        });
+
+      });
+
   }
 
   render() {
+
     const {
       isLoading,
       token,
@@ -223,10 +278,13 @@ class SignIn extends Component {
     } = this.state;
 
     if (isLoading) {
+
       return (<div><p>Loading...</p></div>);
+
     }
 
     if (!token) {
+
       return (
         <div>
           <div>
@@ -278,6 +336,7 @@ class SignIn extends Component {
 
         </div>
       );
+
     }
 
     return (
@@ -286,6 +345,7 @@ class SignIn extends Component {
         <button onClick={this.logout}>Logout</button>
       </div>
     );
+
   }
 }
 
