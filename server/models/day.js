@@ -1,21 +1,37 @@
 const mongoose = require('mongoose');
 const DaySchema = new mongoose.Schema({
   date: {
-    type: Date
+    type: Number
   },
   times: [
     {
-      time: {
-        type: Date
+      timeStart: {
+        type: Number,
+        default: 0
+      },
+      timeEnd: {
+        type: Number,
+        default: 0
+      },
+      caseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null
       }
+
     }
   ],
   timeStart: {
-    type: Date
+    type: Number,
+    default: 0
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   created: {
-    type: Date,
-    default: Date.now
+    type: Number,
+    default: new Date().getTime()
   },
   isActive: {
     type: Boolean,

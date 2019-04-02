@@ -23,7 +23,7 @@ export default class Day extends React.Component {
       });
   }
   dayAdd(event) {
-    let date = new Date(this.state.day);
+    let date = new Date(this.state.day).getTime();
     fetch(`/api/day`, {
       method: 'POST',
       headers: {
@@ -53,8 +53,8 @@ export default class Day extends React.Component {
         <input type="number" value={this.state.timeInterval} onInput={this.handleChange.bind(this, 'timeInterval')} pattern="[1-9]*" />
         <button onClick={this.dayAdd} >+</button>
         <div className="day-form">
-          {this.state.days[0] ? this.state.days[0].times.map((day, i) => (
-            <TimeForm time={new Date(day.time).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")} text={i} key={i}></TimeForm>
+          {this.state.days[0] ? this.state.days[0].times.map((time, i) => (
+            <TimeForm time={time} text={i} key={i}></TimeForm>
           )) : <> </>}
         </div>
       </>

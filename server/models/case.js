@@ -12,15 +12,9 @@ const CaseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Day'
   },
-  timeStart: {
-    type: Date
-  },
-  timeEnd: {
-    type: Date
-  },
   created: {
-    type: Date,
-    default: Date.now
+    type: Number,
+    default: new Date().getTime()
   },
   isActive: {
     type: Boolean,

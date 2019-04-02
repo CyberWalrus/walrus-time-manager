@@ -13,9 +13,12 @@ module.exports = (app) => {
     const {body} = req;
     const {date} = body;
     day.date = date;
-    day.timeStart = new Date(null).setHours(6);
+    day.timeStart = 3600000 * 5;
     for (let i = 6; i < 30; i++) {
-      day.times.push({time: new Date(null).setHours(i)});
+      day.times.push({
+        timeStart: (3600000 * i),
+        timeEnd: (3600000 * (i + 1))
+      });
     }
     day.save()
       .then(() => res.json(day))
