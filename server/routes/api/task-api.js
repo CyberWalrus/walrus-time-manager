@@ -64,9 +64,16 @@ module.exports = (app) => {
   });
   app.get(`/api/task/:id`, function (req, res, next) {
 
+    console.log(req.params.id);
+
     Task.findById(req.params.id)
       .exec()
-      .then((task) => res.json(task))
+      .then((task) => {
+
+        console.log(task);
+        res.json(task);
+
+      })
       .catch((err) => next(err));
 
   });
@@ -75,6 +82,7 @@ module.exports = (app) => {
     let task = new Task();
     const {body} = req;
     const {taskNew} = body;
+    console.log(taskNew);
     Object.assign(task, taskNew);
     task.save()
       .then(() => res.json(task))

@@ -61,4 +61,40 @@ module.exports = (app) => {
 
   }); // end of sign up endpoint
 
+  app.post(`/api/day/:id/change-time/:timeid`, (req, res, next) => {
+
+    const {body} = req;
+    const {timeNew} = body;
+
+    Day.findById(req.params.id)
+      .exec()
+      .then((day) => {
+
+        try {
+
+          let timeIndex = null;
+          day.times.find((element, index, array) => {
+
+            return timeIndex = element._id == timeNew._id ? index : timeIndex;
+
+          });
+          Object.assign(day.times[timeIndex], timeNew);
+
+        }
+
+        catch (err) {
+
+          console.log(err);
+
+        }
+
+        day.save()
+          .then(() => res.json(day))
+          .catch((err) => next(err));
+
+      })
+      .catch((err) => next(err));
+
+  });
+
 };

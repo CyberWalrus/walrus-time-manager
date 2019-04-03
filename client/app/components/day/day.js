@@ -8,6 +8,7 @@ export default class Day extends React.Component {
     super(props);
     this.state = {
       "days": [],
+      "tasklist": [],
       "day": new Date().toISOString().substring(0, 10),
       "timeInterval": 1,
     };
@@ -17,13 +18,23 @@ export default class Day extends React.Component {
   }
   componentDidMount() {
 
-    fetch(`/api/day`)
+    fetch(`/api/tasklist`)
       .then(res => res.json())
       .then(json => {
 
         this.setState({
-          "days": json
+          "tasklist": json
         });
+
+        fetch(`/api/day`)
+          .then(res => res.json())
+          .then(json => {
+
+            this.setState({
+              "days": json
+            });
+
+          });
 
       });
 
@@ -59,7 +70,7 @@ export default class Day extends React.Component {
   }
   render() {
 
-    console.log(this.state.days);
+    console.log(this.state.tasklist);
     return (
       <>
         <input type="date" value={this.state.day} />
@@ -67,8 +78,8 @@ export default class Day extends React.Component {
         <button onClick={this.dayAdd} >+</button>
         <div className="day-form">
           {this.state.days[0] ? this.state.days[0].times.map((time, i) => (
-            <TimeForm time={time} dayId={this.state.days[0]._id} text={i} key={i}></TimeForm>
-          )) : <> </>}
+            <TimeForm time={time} dayId={this.state.days[0]._id} tasklist={this.state.tasklist} key={i}></TimeForm>
+          )) : <> Pusto </>}
         </div>
       </>
     );

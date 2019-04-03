@@ -15,7 +15,7 @@ const DaySchema = new mongoose.Schema({
       },
       "taskId": {
         "type": mongoose.Schema.Types.ObjectId,
-        "ref": `User`,
+        "ref": `Task`,
         "default": null
       }
 

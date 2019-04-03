@@ -1,6 +1,6 @@
 const mongoose = require(`mongoose`);
 const TaskSchema = new mongoose.Schema({
-  "taskListId": {
+  "tasklistId": {
     "type": mongoose.Schema.Types.ObjectId,
     "ref": `TaskList`
   },

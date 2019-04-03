@@ -3,20 +3,18 @@ import PropTypes from "prop-types";
 import "./task-form.scss";
 
 export default class TaskForm extends React.Component {
-  static propTypes = {
-    "taskId": null,
-    "dayId": Object
-  }
   constructor(props) {
 
     super(props);
     this.state = {
-      "tasklist": [],
-      "taskId": this.props.taskId,
+      "tasklist": this.props.tasklist,
+      "time": this.props.time,
+      "taskId": this.props.time.taskId,
+      "tasklistId": ``,
       "task": {},
       "id": ``,
       "listOpen": false,
-      "headerTitle": this.props.taskId,
+      "headerTitle": ``,
       "valueInput": ``,
       "dayId": this.props.dayId
     };
@@ -30,16 +28,8 @@ export default class TaskForm extends React.Component {
   }
   componentDidMount() {
 
-    fetch(`/api/tasklist`)
-      .then(res => res.json())
-      .then(json => {
-
-        this.setState({
-          "tasklist": json
-        });
-
-      });
     if (this.state.taskId != null) {
+
 
       fetch(`/api/task/${this.state.taskId}`)
         .then(res => res.json())
@@ -48,17 +38,26 @@ export default class TaskForm extends React.Component {
           this.setState({
             "task": json
           });
+          try {
+
+            const value = this.state.tasklist.find((element, index, array) => {
+
+              return element._id == this.state.task.tasklistId;
+
+            });
+            console.log(value);
+            console.log(this.state.task);
+            this.setState({
+              "valueInput": value.name
+            });
+
+          } catch (err) {
+
+            console.log(err);
+
+          }
 
         });
-
-      const value = this.state.tasklist.find((element, index, array) => {
-
-        return element._id === this.state.task.taskListId;
-
-      });
-      this.setState({
-        "valueInput": value.name
-      });
 
     } else {
 
@@ -110,41 +109,62 @@ export default class TaskForm extends React.Component {
         data.push(json);
 
         this.setState({
-          "tasklist": data
+          "tasklist": data,
+          "tasklistId": json._id
         });
+        if (this.state.taskId !== null) {
+
+          console.log(`??`);
+
+        } else {
+
+          const task = {
+            "tasklistId": this.state.tasklistId,
+            "dayId": this.state.dayId
+          };
+          fetch(`/api/task`, {
+            "method": `POST`,
+            "headers": {
+              'Content-Type': `application/json`
+            },
+            "body": JSON.stringify({
+              "taskNew": task
+            })
+          }).then(res => res.json())
+            .then(json => {
+
+              let data = json;
+
+              this.setState({
+                "task": data,
+                "taskId": data._id
+              });
+              this.state.time.taskId = this.state.taskId;
+              fetch(`/api/day/${this.state.dayId}/change-time/${this.state.time._id}`, {
+                "method": `POST`,
+                "headers": {
+                  'Content-Type': `application/json`
+                },
+                "body": JSON.stringify({
+                  "timeNew": this.state.time
+                })
+              }).then(res => res.json())
+                .then(json => {
+
+                  let data = json;
+
+                  this.setState({
+                    "time": data
+                  });
+
+                });
+
+            });
+
+
+        }
 
       });
-    if (this.state.taskId !== null) {
-
-      console.log(`??`);
-
-    } else {
-
-      const task = {
-        "taskListId": this.state.tasklist[0]._id,
-        "dayId": this.state.dayId
-      };
-      fetch(`/api/task`, {
-        "method": `POST`,
-        "headers": {
-          'Content-Type': `application/json`
-        },
-        "body": JSON.stringify({
-          "taskNew": task
-        })
-      }).then(res => res.json())
-        .then(json => {
-
-          let data = json;
-
-          this.setState({
-            "task": data,
-            "taskId": data._id
-          });
-
-        });
-
-    }
 
   }
   itemDelete(index) {
