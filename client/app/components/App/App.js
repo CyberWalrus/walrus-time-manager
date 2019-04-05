@@ -22,6 +22,7 @@ import UserRoleOptions from '../options/user-role-options';
 import UserOptions from '../options/user-options';
 import PrivateRoute from '../routes/private-route';
 import MessageManager from '../message-manager/message-manager';
+import TestPage from '../test/test';
 import {
   getFromStorage,
   setInStorage,
@@ -208,6 +209,7 @@ export default class App extends React.Component {
               <PrivateRoute path="/options/user" component={UserOptions} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole(`/options/user`)} />
               <PrivateRoute path="/options/userrole" component={UserRoleOptions} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole(`/options/userrole`)} />
               <PrivateRoute path="/message/:id" component={MessageManager} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole(`/message`)} />
+              <PrivateRoute path="/test" component={TestPage} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole(`/test`)} />
 
               <Route path="/login"><Login onChange={this.handleActive.bind(this)} /></Route>
               <Route path="/signup" component={SignUp} />

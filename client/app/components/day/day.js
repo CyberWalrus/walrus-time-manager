@@ -26,6 +26,9 @@ export default class Day extends React.Component {
           "tasklist": json
         });
 
+      })
+      .then(() => {
+
         fetch(`/api/day`)
           .then(res => res.json())
           .then(json => {
