@@ -59,7 +59,27 @@ module.exports = (app) => {
       })
       .catch((err) => next(err));
 
-  }); // end of sign up endpoint
+  });
+
+  app.post(`/api/day/:id/change-time`, (req, res, next) => {
+
+    const {body} = req;
+    const {timesNew} = body;
+
+    Day.findById(req.params.id)
+      .exec()
+      .then((day) => {
+
+        day.times = timesNew;
+
+        day.save()
+          .then(() => res.json(day))
+          .catch((err) => next(err));
+
+      })
+      .catch((err) => next(err));
+
+  });
 
   app.post(`/api/day/:id/change-time/:timeid`, (req, res, next) => {
 
