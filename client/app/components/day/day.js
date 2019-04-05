@@ -18,13 +18,13 @@ export default class Day extends React.Component {
   }
   componentDidMount() {
 
+    let tasklist = [];
+
     fetch(`/api/tasklist`)
       .then(res => res.json())
       .then(json => {
 
-        this.setState({
-          "tasklist": json
-        });
+        tasklist = json;
 
       })
       .then(() => {
@@ -34,7 +34,8 @@ export default class Day extends React.Component {
           .then(json => {
 
             this.setState({
-              "days": json
+              "days": json,
+              "tasklist": tasklist
             });
 
           });

@@ -252,7 +252,7 @@ class MenuOptions extends Component {
                   onChange={this.handleIndexListChange.bind(this, i)} />
               </span>
               <span>
-                <DropDownUserRole value={menu.userRole} onChange={this.handleUserRoleListChange.bind(this, i)} />
+                <DropDownUserRole value={menu.userRole} onChangeProp={this.handleUserRoleListChange.bind(this, i)} />
               </span>
               <span>{menu.isActive.toString()}</span>
               <button onClick={() => this.onIsDeleted(i)}>Active</button>
@@ -278,7 +278,7 @@ class MenuOptions extends Component {
               onChange={this.handleIndex} />
           </span>
           <span>
-            <DropDownUserRole value={this.state.userRole} onChange={this.handleUserRole.bind(this)} />
+            <DropDownUserRole value={this.state.userRole} onChangeProp={this.handleUserRole.bind(this)} />
           </span>
           <button onClick={this.createMenu}>add</button>
         </div>

@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
+import PropTypes from "prop-types";
 
 class DropDownUserRole extends Component {
+  static propTypes = {
+
+    "onChangeProp": PropTypes.func.isRequired,
+    "value": PropTypes.string.isRequired
+
+  }
   constructor(props) {
 
     super(props);
@@ -36,7 +43,7 @@ class DropDownUserRole extends Component {
 
       })
     });
-    this.props.onChange([].slice.call(e.target.selectedOptions).map(o => {
+    this.props.onChangeProp([].slice.call(e.target.selectedOptions).map(o => {
 
       return o.value;
 

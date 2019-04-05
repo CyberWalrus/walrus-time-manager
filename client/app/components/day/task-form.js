@@ -3,6 +3,13 @@ import PropTypes from "prop-types";
 import "./task-form.scss";
 
 export default class TaskForm extends React.Component {
+  static propTypes = {
+
+    "time": PropTypes.object.isRequired,
+    "dayId": PropTypes.string.isRequired,
+    "tasklist": PropTypes.array.isRequired,
+
+  }
   constructor(props) {
 
     super(props);

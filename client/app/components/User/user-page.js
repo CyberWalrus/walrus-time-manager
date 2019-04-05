@@ -5,8 +5,14 @@ import {
   setInStorage,
 } from '../../utils/storage';
 import {Link} from 'react-router-dom';
+import PropTypes from "prop-types";
 
 export default class SignUp extends Component {
+  static propTypes = {
+
+    "onChangeProp": PropTypes.func.isRequired
+
+  }
   constructor(props) {
 
     super(props);
@@ -121,7 +127,7 @@ export default class SignUp extends Component {
             "signInEmail": ``,
             "token": json.token,
           });
-          this.props.onChange(true);
+          this.props.onChangeProp(true);
 
         } else {
 

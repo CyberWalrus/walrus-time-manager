@@ -1,9 +1,17 @@
-import React from 'react';
-import TaskForm from './task-form';
-import {msToString} from '../../utils/storage';
-import './time-form.scss';
+import React from "react";
+import TaskForm from "./task-form";
+import {msToString} from "../../utils/storage";
+import PropTypes from "prop-types";
+import "./time-form.scss";
 
 export default class TimeForm extends React.Component {
+  static propTypes = {
+
+    "time": PropTypes.object.isRequired,
+    "dayId": PropTypes.string.isRequired,
+    "tasklist": PropTypes.array.isRequired,
+
+  }
   constructor(props) {
 
     super(props);
@@ -18,6 +26,7 @@ export default class TimeForm extends React.Component {
 
   }
   render() {
+
     return (
       <div className="time-form">
         <div className="time-form__time">

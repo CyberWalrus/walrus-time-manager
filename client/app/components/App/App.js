@@ -184,7 +184,7 @@ export default class App extends React.Component {
         return (
           <div className="login-div">
             <Switch>
-              <Route path="/login"><Login onChange={this.handleActive.bind(this)} /></Route>
+              <Route path="/login"><Login onChangeProp={this.handleActive.bind(this)} /></Route>
               <Route path="/signup" component={SignUp} />
               <Route render={() => (
                 <Redirect to="/login" />
@@ -211,7 +211,7 @@ export default class App extends React.Component {
               <PrivateRoute path="/message/:id" component={MessageManager} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole(`/message`)} />
               <PrivateRoute path="/test" component={TestPage} isAuthenticated={this.state.isActive} isRole={this.checkMenuRole(`/test`)} />
 
-              <Route path="/login"><Login onChange={this.handleActive.bind(this)} /></Route>
+              <Route path="/login"><Login onChangeProp={this.handleActive.bind(this)} /></Route>
               <Route path="/signup" component={SignUp} />
               <Route render={() => (
                 !this.state.isActive ? (
