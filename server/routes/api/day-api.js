@@ -18,7 +18,7 @@ module.exports = (app) => {
     const {date} = body;
     day.date = date;
     day.timeStart = 3600000 * 5;
-    for (let i = 6; i < 30; i++) {
+    for (let i = 6;i < 30;i++) {
 
       day.times.push({
         "timeStart": (3600000 * i),

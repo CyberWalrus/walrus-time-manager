@@ -10,6 +10,7 @@ export default class TaskForm extends React.Component {
     "tasklist": PropTypes.array.isRequired,
 
   }
+
   constructor(props) {
 
     super(props);
@@ -33,6 +34,7 @@ export default class TaskForm extends React.Component {
     this.itemDelete = this.itemDelete.bind(this);
 
   }
+
   componentDidMount() {
 
     if (this.state.taskId != null) {
@@ -52,15 +54,13 @@ export default class TaskForm extends React.Component {
               return element._id == this.state.task.tasklistId;
 
             });
-            console.log(value);
-            console.log(this.state.task);
             this.setState({
               "valueInput": value.name
             });
 
           } catch (err) {
 
-            console.log(err);
+            err;
 
           }
 
@@ -75,8 +75,10 @@ export default class TaskForm extends React.Component {
     }
 
   }
+
   takeValueTask(value) {
   }
+
   handleClickOutside() {
 
     this.setState({
@@ -84,6 +86,7 @@ export default class TaskForm extends React.Component {
     });
 
   }
+
   toggleList() {
 
     this.setState(prevState => ({
@@ -91,6 +94,7 @@ export default class TaskForm extends React.Component {
     }));
 
   }
+
   inputChange(event) {
 
     this.setState({
@@ -98,9 +102,16 @@ export default class TaskForm extends React.Component {
     });
 
   }
+
   inputAccept(event) {
 
-    let name = this.state.valueInput;
+    this.tasklistAdd(this.state.valueInput, true);
+
+  }
+
+  tasklistAdd(value, isTask = false) {
+
+    let name = value;
     fetch(`/api/tasklist`, {
       "method": `POST`,
       "headers": {
@@ -109,7 +120,8 @@ export default class TaskForm extends React.Component {
       "body": JSON.stringify({
         "name": name
       })
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(json => {
 
         let data = this.state.tasklist;
@@ -119,61 +131,81 @@ export default class TaskForm extends React.Component {
           "tasklist": data,
           "tasklistId": json._id
         });
-        if (this.state.taskId !== null) {
+        if (isTask) {
 
-          console.log(`??`);
-
-        } else {
-
-          const task = {
-            "tasklistId": this.state.tasklistId,
-            "dayId": this.state.dayId
-          };
-          fetch(`/api/task`, {
-            "method": `POST`,
-            "headers": {
-              'Content-Type': `application/json`
-            },
-            "body": JSON.stringify({
-              "taskNew": task
-            })
-          }).then(res => res.json())
-            .then(json => {
-
-              let data = json;
-
-              this.setState({
-                "task": data,
-                "taskId": data._id
-              });
-              this.state.time.taskId = this.state.taskId;
-              fetch(`/api/day/${this.state.dayId}/change-time/${this.state.time._id}`, {
-                "method": `POST`,
-                "headers": {
-                  'Content-Type': `application/json`
-                },
-                "body": JSON.stringify({
-                  "timeNew": this.state.time
-                })
-              }).then(res => res.json())
-                .then(json => {
-
-                  let data = json;
-
-                  this.setState({
-                    "time": data
-                  });
-
-                });
-
-            });
-
+          this.changeTask();
 
         }
 
       });
 
   }
+
+  changeTime(value) {
+
+    const timeNew = Object.assign({}, this.state.time, {"taskId": value});
+    fetch(`/api/day/${this.state.dayId}/change-time/${this.state.time._id}`, {
+      "method": `POST`,
+      "headers": {
+        'Content-Type': `application/json`
+      },
+      "body": JSON.stringify({
+        "timeNew": timeNew
+      })
+    }).then(res => res.json())
+      .then(json => {
+
+        let data = json;
+
+        this.setState({
+          "time": data
+        });
+
+      });
+
+  }
+
+  changeTask(isTime = false) {
+
+    if (this.state.taskId !== null) {
+
+      console.log(`??`);
+
+    } else {
+
+      const task = {
+        "tasklistId": this.state.tasklistId,
+        "dayId": this.state.dayId
+      };
+      fetch(`/api/task`, {
+        "method": `POST`,
+        "headers": {
+          'Content-Type': `application/json`
+        },
+        "body": JSON.stringify({
+          "taskNew": task
+        })
+      }).then(res => res.json())
+        .then(json => {
+
+          let data = json;
+
+          this.setState({
+            "task": data,
+            "taskId": data._id
+          });
+          if (isTime) {
+
+            this.changeTime(data._id);
+
+          }
+
+        });
+
+    }
+
+  }
+
   itemDelete(index) {
 
     const id = this.state.tasklist[index]._id;
@@ -186,6 +218,7 @@ export default class TaskForm extends React.Component {
       });
 
   }
+
   itemClick(evet) {
 
     this.setState({
@@ -194,6 +227,7 @@ export default class TaskForm extends React.Component {
     });
 
   }
+
   _modifyTaskList(index, data) {
 
     let prevData = this.state.tasklist;
@@ -213,6 +247,7 @@ export default class TaskForm extends React.Component {
     });
 
   }
+
   render() {
 
     const {listOpen, headerTitle} = this.state;
