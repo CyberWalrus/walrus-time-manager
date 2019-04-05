@@ -133,7 +133,7 @@ export default class TaskForm extends React.Component {
         });
         if (isTask) {
 
-          this.changeTask();
+          this.changeTask(true);
 
         }
 
@@ -165,16 +165,35 @@ export default class TaskForm extends React.Component {
 
   }
 
-  changeTask(isTime = false) {
+  changeTask(isTime = false, tasklistId = this.state.tasklistId) {
 
     if (this.state.taskId !== null) {
 
-      console.log(`??`);
+      const task = Object.assign({}, this.state.task, {"tasklistId": tasklistId});
+      fetch(`/api/task/${this.state.taskId}/change`, {
+        "method": `POST`,
+        "headers": {
+          'Content-Type': `application/json`
+        },
+        "body": JSON.stringify({
+          "taskNew": task
+        })
+      }).then(res => res.json())
+        .then(json => {
+
+          let data = json;
+
+          this.setState({
+            "task": data,
+            "taskId": data._id
+          });
+
+        });
 
     } else {
 
       const task = {
-        "tasklistId": this.state.tasklistId,
+        "tasklistId": tasklistId,
         "dayId": this.state.dayId
       };
       fetch(`/api/task`, {
@@ -221,6 +240,7 @@ export default class TaskForm extends React.Component {
 
   itemClick(evet) {
 
+    this.changeTask(true, event.target.id);
     this.setState({
       "valueInput": event.target.title,
       "listOpen": false
@@ -259,7 +279,7 @@ export default class TaskForm extends React.Component {
         </div>
         {listOpen && <ul className="task-form__list">
           {this.state.tasklist.map((item, i) => (
-            <li className="task-form__list_item" key={i} onClick={this.itemClick} title={item.name}>{item.name}
+            <li className="task-form__list_item" key={i} onClick={this.itemClick} id={item._id} title={item.name}>{item.name}
               <button onClick={() => this.itemDelete(i)}>v</button></li>
           ))}
         </ul>}

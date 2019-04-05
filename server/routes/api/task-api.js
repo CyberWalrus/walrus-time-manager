@@ -92,13 +92,13 @@ module.exports = (app) => {
   app.post(`/api/task/:id/change`, (req, res, next) => {
 
     const {body} = req;
-    const {taskOld} = body;
+    const {taskNew} = body;
 
     Task.findById(req.params.id)
       .exec()
       .then((task) => {
 
-        Object.assign(task, taskOld);
+        Object.assign(task, taskNew);
 
         task.save()
           .then(() => res.json(task))
