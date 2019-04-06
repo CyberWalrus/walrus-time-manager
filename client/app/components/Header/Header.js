@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Header = () => (
   <header>
     <Link to="/">Home</Link>
-
     <nav>
       <Link to="/helloworld">Hello World</Link>
     </nav>
@@ -15,7 +14,6 @@ const Header = () => (
     <nav>
       <Link to="/signin">SignIn</Link>
     </nav>
-
     <hr />
   </header>
 );

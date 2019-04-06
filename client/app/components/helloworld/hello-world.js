@@ -1,20 +1,17 @@
-import React, {Component} from 'react';
-import {FormattedMessage} from 'react-intl';
+import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
 
 export default class HelloWorld extends Component {
   constructor(props) {
-
     super(props);
     this.state = {
-      "name": `Eric`,
-      "unreadCount": 1000,
+      name: `Eric`,
+      unreadCount: 1000
     };
-
   }
 
   render() {
-
-    const {name, unreadCount} = this.state;
+    const { name, unreadCount } = this.state;
 
     return (
       <p>
@@ -24,10 +21,9 @@ export default class HelloWorld extends Component {
                       one {message}
                       other {messages}
                     }`}
-          values={{"name": <b>{name}</b>, unreadCount}}
+          values={{ name: <b>{name}</b>, unreadCount }}
         />
       </p>
     );
-
   }
 }

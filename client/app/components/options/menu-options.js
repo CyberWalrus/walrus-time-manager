@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
-import 'whatwg-fetch';
-import DropDownUserRole from '../drop-down/drop-down-user-role';
+import React, { Component } from "react";
+import "whatwg-fetch";
+import DropDownUserRole from "../drop-down/drop-down-user-role";
 
 class MenuOptions extends Component {
   constructor(props) {
-
     super(props);
 
     this.state = {
-      "menus": [],
-      "label": ``,
-      "url": `/`,
-      "newindex": 0,
-      "userRole": []
+      menus: [],
+      label: ``,
+      url: `/`,
+      newindex: 0,
+      userRole: []
     };
 
     this.handleLabelListChange = this.handleLabelListChange.bind(this);
@@ -29,78 +28,56 @@ class MenuOptions extends Component {
     this.deletedMenu = this.deletedMenu.bind(this);
 
     this.__modifyMenu = this.__modifyMenu.bind(this);
-
   }
 
   componentDidMount() {
-
     fetch(`/api/options/menu`)
       .then(res => res.json())
       .then(json => {
-
         this.setState({
-          "menus": json
+          menus: json
         });
-
       });
-
   }
   handleLabelListChange(index, event) {
-
     let menus = this.state.menus.slice(); // Make a copy of the emails first.
     menus[index].label = event.target.value; // Update it with the modified email.
-    this.setState({"menus": menus}); // Update the state.
+    this.setState({ menus: menus }); // Update the state.
     this.changeMenu(index);
-
   }
   handleURLListChange(index, event) {
-
     let menus = this.state.menus.slice(); // Make a copy of the emails first.
     menus[index].url = event.target.value; // Update it with the modified email.
-    this.setState({"menus": menus}); // Update the state.
+    this.setState({ menus: menus }); // Update the state.
     this.changeMenu(index);
-
   }
   handleIndexListChange(index, event) {
-
     let menus = this.state.menus.slice(); // Make a copy of the emails first.
     menus[index].index = event.target.value; // Update it with the modified email.
-    this.setState({"menus": menus}); // Update the state.
+    this.setState({ menus: menus }); // Update the state.
     this.changeMenu(index);
-
   }
   handleUserRoleListChange(index, value) {
-
     console.log(value);
     let menus = this.state.menus.slice(); // Make a copy of the emails first.
     menus[index].userRole = value; // Update it with the modified email.
-    this.setState({"menus": menus}); // Update the state.
+    this.setState({ menus: menus }); // Update the state.
     this.changeMenu(index);
-
   }
   handleLabel(event) {
-
-    this.setState({"label": event.target.value}); // Update the state.
-
+    this.setState({ label: event.target.value }); // Update the state.
   }
   handleURL(event) {
-
-    this.setState({"url": event.target.value}); // Update the state.
-
+    this.setState({ url: event.target.value }); // Update the state.
   }
   handleIndex(event) {
-
-    this.setState({"newindex": event.target.value}); // Update the state.
-
+    this.setState({ newindex: event.target.value }); // Update the state.
   }
   handleUserRole(value) {
-
-    this.setState({"userRole": value});
-
+    this.setState({ userRole: value });
   }
 
   changeMenu(index) {
-
     const id = this.state.menus[index]._id;
     const label = this.state.menus[index].label;
     const url = this.state.menus[index].url;
@@ -108,26 +85,24 @@ class MenuOptions extends Component {
     const userRole = this.state.menus[index].userRole;
     // Post request to backend
     fetch(`/api/options/menu/${id}/change`, {
-      "method": `POST`,
-      "headers": {
-        'Content-Type': `application/json`
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`
       },
-      "body": JSON.stringify({
-        "label": label,
-        "url": url,
-        "idx": idx,
-        "userRole": userRole
-      }),
+      body: JSON.stringify({
+        label: label,
+        url: url,
+        idx: idx,
+        userRole: userRole
+      })
     })
       .then(res => res.json())
       .then(json => {
         //this.__modifyMenu(index, json);
       });
-
   }
 
   createMenu() {
-
     const label = this.state.label;
     const url = this.state.url;
     const idx = this.state.newindex;
@@ -137,98 +112,91 @@ class MenuOptions extends Component {
     this.state.newindex = ``;
     // Post request to backend
     fetch(`/api/options/menu/create`, {
-      "method": `POST`,
-      "headers": {
-        'Content-Type': `application/json`
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`
       },
-      "body": JSON.stringify({
-        "label": label,
-        "url": url,
-        "idx": idx,
-        "userRole": userRole
-      }),
-    }).then(res => res.json())
+      body: JSON.stringify({
+        label: label,
+        url: url,
+        idx: idx,
+        userRole: userRole
+      })
+    })
+      .then(res => res.json())
       .then(json => {
-
         let data = this.state.menus;
         data.push(json);
 
         this.setState({
-          "menus": data
+          menus: data
         });
-
       });
-
   }
 
   onIsDeleted(index) {
-
     const id = this.state.menus[index]._id;
 
-    fetch(`/api/options/menu/${id}/isdeleted`, {"method": `PUT`})
+    fetch(`/api/options/menu/${id}/isdeleted`, { method: `PUT` })
       .then(res => res.json())
       .then(json => {
-
         this.__modifyMenu(index, json);
-
       });
-
   }
 
   deletedMenu(index) {
-
     const id = this.state.menus[index]._id;
 
-    fetch(`/api/options/menu/${id}/deleted`, {"method": `DELETE`})
-      .then(_ => {
-
-        this.__modifyMenu(index, null);
-
-      });
-
+    fetch(`/api/options/menu/${id}/deleted`, { method: `DELETE` }).then(_ => {
+      this.__modifyMenu(index, null);
+    });
   }
 
   __modifyMenu(index, data) {
-
     let prevData = this.state.menus;
 
     if (data) {
-
       prevData[index] = data;
-
     } else {
-
       prevData.splice(index, 1);
-
     }
 
     this.setState({
-      "menus": prevData
+      menus: prevData
     });
-
   }
 
   findMaxIndex(array, value, oldvalue) {
-
-    if ((array.filter(x => x.index == value).length != 0) || (value == 0) || (value == ``)) {
-
-      if (oldvalue != parseInt(array.reduce((prev, current) => (prev.id > current.index) ? prev : current).index, 10)) {
-
-        value = 1 + parseInt(array.reduce((prev, current) => (prev.id > current.index) ? prev : current).index, 10);
-
+    if (
+      array.filter(x => x.index == value).length != 0 ||
+      value == 0 ||
+      value == ``
+    ) {
+      if (
+        oldvalue !=
+        parseInt(
+          array.reduce((prev, current) =>
+            prev.id > current.index ? prev : current
+          ).index,
+          10
+        )
+      ) {
+        value =
+          1 +
+          parseInt(
+            array.reduce((prev, current) =>
+              prev.id > current.index ? prev : current
+            ).index,
+            10
+          );
       } else {
-
         value = oldvalue;
-
       }
-
     }
     return value;
-
   }
 
   render() {
-
     return (
       <div>
         <p>Menu Options:</p>
@@ -237,22 +205,31 @@ class MenuOptions extends Component {
           {this.state.menus.map((menu, i) => (
             <li key={i}>
               <span>
-                <input type="text"
+                <input
+                  type="text"
                   value={menu.label}
-                  onChange={this.handleLabelListChange.bind(this, i)} />
+                  onChange={this.handleLabelListChange.bind(this, i)}
+                />
               </span>
               <span>
-                <input type="text"
+                <input
+                  type="text"
                   value={menu.url}
-                  onChange={this.handleURLListChange.bind(this, i)} />
+                  onChange={this.handleURLListChange.bind(this, i)}
+                />
               </span>
               <span>
-                <input type="number"
+                <input
+                  type="number"
                   value={menu.index}
-                  onChange={this.handleIndexListChange.bind(this, i)} />
+                  onChange={this.handleIndexListChange.bind(this, i)}
+                />
               </span>
               <span>
-                <DropDownUserRole value={menu.userRole} onChangeProp={this.handleUserRoleListChange.bind(this, i)} />
+                <DropDownUserRole
+                  value={menu.userRole}
+                  onChangeProp={this.handleUserRoleListChange.bind(this, i)}
+                />
               </span>
               <span>{menu.isActive.toString()}</span>
               <button onClick={() => this.onIsDeleted(i)}>Active</button>
@@ -263,28 +240,36 @@ class MenuOptions extends Component {
 
         <div>
           <span>
-            <input type="text"
+            <input
+              type="text"
               value={this.state.label}
-              onChange={this.handleLabel} />
+              onChange={this.handleLabel}
+            />
           </span>
           <span>
-            <input type="text"
+            <input
+              type="text"
               value={this.state.url}
-              onChange={this.handleURL} />
+              onChange={this.handleURL}
+            />
           </span>
           <span>
-            <input type="number"
+            <input
+              type="number"
               value={this.state.newindex}
-              onChange={this.handleIndex} />
+              onChange={this.handleIndex}
+            />
           </span>
           <span>
-            <DropDownUserRole value={this.state.userRole} onChangeProp={this.handleUserRole.bind(this)} />
+            <DropDownUserRole
+              value={this.state.userRole}
+              onChangeProp={this.handleUserRole.bind(this)}
+            />
           </span>
           <button onClick={this.createMenu}>add</button>
         </div>
       </div>
     );
-
   }
 }
 

@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
-import 'whatwg-fetch';
+import React, { Component } from "react";
+import "whatwg-fetch";
 
 class Home extends Component {
   constructor(props) {
-
     super(props);
 
     this.state = {
-      "counters": [],
-      "value": ``
+      counters: [],
+      value: ``
     };
-    this.counterName = {"value": ``};
+    this.counterName = { value: `` };
 
     this.handleChange = this.handleChange.bind(this);
     this.newCounter = this.newCounter.bind(this);
@@ -19,141 +18,107 @@ class Home extends Component {
     this.deleteCounter = this.deleteCounter.bind(this);
 
     this._modifyCounter = this._modifyCounter.bind(this);
-
   }
 
   componentDidMount() {
-
     fetch(`/api/counters`)
       .then(res => res.json())
       .then(json => {
-
         this.setState({
-          "counters": json
+          counters: json
         });
-
       });
-
   }
 
   newCounter() {
-
     let name = this.state.value;
     this.state.value = ``;
     fetch(`/api/counters`, {
-      "method": `POST`,
-      "headers": {
-        'Content-Type': `application/json`
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`
       },
-      "body": JSON.stringify({
-        "name": name
+      body: JSON.stringify({
+        name: name
       })
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(json => {
-
         let data = this.state.counters;
         data.push(json);
 
         this.setState({
-          "counters": data
+          counters: data
         });
-
       });
-
   }
 
   incrementCounter(index) {
-
     const id = this.state.counters[index]._id;
 
-    fetch(`/api/counters/${id}/increment`, {"method": `PUT`})
+    fetch(`/api/counters/${id}/increment`, { method: `PUT` })
       .then(res => res.json())
       .then(json => {
-
         this._modifyCounter(index, json);
-
       });
-
   }
 
   decrementCounter(index) {
-
     const id = this.state.counters[index]._id;
 
-    fetch(`/api/counters/${id}/decrement`, {"method": `PUT`})
+    fetch(`/api/counters/${id}/decrement`, { method: `PUT` })
       .then(res => res.json())
       .then(json => {
-
         this._modifyCounter(index, json);
-
       });
-
   }
 
   changeNameCounter(index) {
-
     const id = this.state.counters[index]._id;
     const name = this.state.value;
     this.state.value = ``;
     // Post request to backend
     fetch(`/api/counters/${id}/changename`, {
-      "method": `POST`,
-      "headers": {
-        'Content-Type': `application/json`
+      method: `POST`,
+      headers: {
+        "Content-Type": `application/json`
       },
-      "body": JSON.stringify({
-        "name": name
-      }),
+      body: JSON.stringify({
+        name: name
+      })
     })
       .then(res => res.json())
       .then(json => {
-
         this._modifyCounter(index, json);
-
       });
-
   }
 
   deleteCounter(index) {
-
     const id = this.state.counters[index]._id;
 
-    fetch(`/api/counters/${id}`, {"method": `DELETE`})
-      .then(_ => {
-
-        this._modifyCounter(index, null);
-
-      });
-
+    fetch(`/api/counters/${id}`, { method: `DELETE` }).then(_ => {
+      this._modifyCounter(index, null);
+    });
   }
   handleChange(event) {
-
-    this.setState({"value": event.target.value});
-
+    this.setState({ value: event.target.value });
   }
 
   _modifyCounter(index, data) {
-
     let prevData = this.state.counters;
 
     if (data) {
-
       prevData[index] = data;
-
     } else {
-
       prevData.splice(index, 1);
-
     }
 
     this.setState({
-      "counters": prevData
+      counters: prevData
     });
-
   }
 
   render() {
-
     return (
       <>
         <p>Counters:</p>
@@ -171,16 +136,15 @@ class Home extends Component {
           ))}
         </ul>
 
-
-
-        <input type="text"
+        <input
+          type="text"
           placeholder="Hello!"
           value={this.state.value}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <button onClick={this.newCounter}>New counter</button>
       </>
     );
-
   }
 }
 

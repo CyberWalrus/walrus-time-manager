@@ -1,4 +1,25 @@
+.day-page {
+  display: grid;
+  min-width: 100%;
+  min-height: 100%;
+  grid-template-rows: 100px 1fr;
+}
 .day-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &_grid {
+    display: grid;
+    min-width: 800px;
+  }
+}
+.day-controle {
   display: grid;
   min-width: 300px;
+  grid-template-rows: 1fr 1fr 1fr;
+  &_flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
