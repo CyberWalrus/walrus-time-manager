@@ -90,9 +90,15 @@ export default class TestPage extends React.Component {
   }
   divMouseDown(e) {
     e.target.attributes.move.value = 1;
+    const target = e.target;
+    console.log(e.target);
+    window.addEventListener(`pointerup`, this.divMouseUp);
   }
   divMouseUp(e) {
-    e.target.attributes.move.value = 0;
+    //e.target.attributes.move.value = 0;
+    console.log(`test`);
+    console.log(e.target);
+    window.removeEventListener(`pointerup`, this.divMouseUp);
   }
   divMouseMove(e) {
     console.log(e.target.attributes.move.value);
@@ -105,13 +111,7 @@ export default class TestPage extends React.Component {
   render() {
     return (
       <div>
-        <div
-          move={0}
-          style={getDivStyle()}
-          onMouseDown={this.divMouseDown}
-          onMouseUp={this.divMouseUp}
-          onMouseMove={this.divMouseMove}
-        >
+        <div move={0} style={getDivStyle()} onPointerDown={this.divMouseDown}>
           {`${this.state.x} , ${this.state.y} , ${this.state.value}`}
         </div>
         <DragDropContext onDragEnd={this.onDragEnd}>
