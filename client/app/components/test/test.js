@@ -10,32 +10,18 @@ export default class TestPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/day`)
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-          days: json
-        });
-      })
-      .then(() => {
-        this.setState({
-          text: `test`
-        });
-      });
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext(`2d`);
+    ctx.fillRect(25, 25, 100, 100);
+    ctx.clearRect(45, 45, 60, 60);
+    ctx.strokeRect(50, 50, 50, 50);
   }
 
   render() {
     return (
-      <>
-        {this.state.text}
-        {this.state.days[0] ? (
-          this.state.days.map((day, i) => (
-            <div key="i">{JSON.stringify(day)}</div>
-          ))
-        ) : (
-          <> </>
-        )}
-      </>
+      <div>
+        <canvas ref={`canvas`} width={200} height={400} />
+      </div>
     );
   }
 }

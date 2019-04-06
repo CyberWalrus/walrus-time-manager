@@ -71,7 +71,7 @@ export default class TimeForm extends React.Component {
   }
   render() {
     let nextDay = ``;
-    if (this.props.times[this.props.index].timeStart >= 3600000) {
+    if (this.props.times[this.props.index].timeStart >= 36000000) {
       nextDay = `next day `;
     }
     const timeText = `${nextDay}${msToString(
