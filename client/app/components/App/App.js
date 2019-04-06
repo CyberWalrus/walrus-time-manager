@@ -1,4 +1,4 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 
 import Menu from "../header/menu";
 import Footer from "../footer/footer";
@@ -8,7 +8,7 @@ import {
   Link,
   Switch,
   Redirect
-} from "./node_modules/react-router-dom";
+} from "react-router-dom";
 import NotFound from "./not-found";
 
 import Home from "../home/home";
