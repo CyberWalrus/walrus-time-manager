@@ -4,7 +4,7 @@ import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { IntlProvider } from "react-intl";
 
-import App from "./components/App/app";
+import App from "./components/app/app";
 
 import "./styles/styles.scss";
 import messages_ru from "./translations/ru.json";
