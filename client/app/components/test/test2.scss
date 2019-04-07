@@ -1,0 +1,17 @@
+.test-div {
+  width: 1005;
+  height: 100%;
+  background-color: green;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.test-form{
+  height: 100%;
+  width: 500px;
+  background-color: red;
+  display: grid;
+  grid-template-rows: 1fr 150px 1fr;
+}

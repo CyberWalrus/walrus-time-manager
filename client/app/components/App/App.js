@@ -23,6 +23,7 @@ import UserOptions from "../options/user-options";
 import PrivateRoute from "../routes/private-route";
 import MessageManager from "../message-manager/message-manager";
 import TestPage from "../test/test";
+import Test2 from "../test/test2";
 import { getFromStorage, setInStorage } from "../../utils/storage";
 import { IntlProvider, FormattedMessage } from "react-intl";
 
@@ -212,6 +213,12 @@ export default class App extends React.Component {
                 component={TestPage}
                 isAuthenticated={this.state.isActive}
                 isRole={this.checkMenuRole(`/test`)}
+              />
+              <PrivateRoute
+                path="/test2"
+                component={Test2}
+                isAuthenticated={this.state.isActive}
+                isRole={this.checkMenuRole(`/test2`)}
               />
 
               <Route path="/login">
