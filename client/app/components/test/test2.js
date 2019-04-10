@@ -34,7 +34,7 @@ const checkHeiht = (
   maxHeight = 0,
   minHeightElement = 0
 ) => {
-  const indexSecond = isSide ? index + 1 : index - 1;
+  const indexSecond = isSide ? index - 1 : index + 1;
   const listNew = heightList.slice();
   let pointerNow = 0;
   if (pointerValue == 0) {
@@ -66,7 +66,7 @@ export default class Test2 extends React.Component {
     this.state = {
       x: 0,
       y: 0,
-      value: [200, 200, 200]
+      heightList: [200, 200, 200]
     };
     this.divPointerDown = this.divPointerDown.bind(this);
     this.divPointerUp = this.divPointerUp.bind(this);
@@ -90,25 +90,18 @@ export default class Test2 extends React.Component {
     });
   }
   divPointerMove(e) {
-    let yNow = 0;
-
-    if (this.state.y == 0) {
-      yNow = e.clientY;
-    }
-    const heightlist = this.state.value.slice();
-    heightlist[0] -= yNow + this.state.y - e.clientY;
-    heightlist[1] += yNow + this.state.y - e.clientY;
-    if (heightlist[1] < 60) {
-      heightlist[1] = 60;
-      heightlist[0] = 600 - heightlist[2] - heightlist[1];
-    }
-    if (heightlist[0] < 60) {
-      heightlist[0] = 60;
-      heightlist[1] = 600 - heightlist[2] - heightlist[0];
-    }
+    const heightList = checkHeiht(
+      this.state.heightList,
+      1,
+      true,
+      this.state.y,
+      e.clientY,
+      700,
+      60
+    );
     this.setState({
       y: e.clientY,
-      value: heightlist
+      heightList: heightList
     });
   }
   divPointerDown2(e) {
@@ -125,34 +118,27 @@ export default class Test2 extends React.Component {
     window.removeEventListener(`pointermove`, this.divPointerMove2);
   }
   divPointerMove2(e) {
-    let yNow = 0;
-
-    if (this.state.y == 0) {
-      yNow = e.clientY;
-    }
-    const heightlist = this.state.value.slice();
-    heightlist[2] += yNow + this.state.y - e.clientY;
-    heightlist[1] -= yNow + this.state.y - e.clientY;
-    if (heightlist[1] < 60) {
-      heightlist[1] = 60;
-      heightlist[2] = 600 - heightlist[0] - heightlist[1];
-    }
-    if (heightlist[2] < 60) {
-      heightlist[2] = 60;
-      heightlist[1] = 600 - heightlist[0] - heightlist[2];
-    }
+    const heightList = checkHeiht(
+      this.state.heightList,
+      1,
+      false,
+      this.state.y,
+      e.clientY,
+      700,
+      60
+    );
     this.setState({
       y: e.clientY,
-      value: heightlist
+      heightList: heightList
     });
   }
   render() {
     return (
-      <div style={getTestFormStyle(this.state.value)}>
+      <div style={getTestFormStyle(this.state.heightList)}>
         <div style={getTestDivStyle(`test1`)} />
         <div style={getTestDivStyle(`div`, `green`)}>
           <div className="div-top" onPointerDown={this.divPointerDown} />
-          {`value: ${this.state.value}, y: ${this.state.y}`}
+          {`value: ${this.state.heightList[0]}, y: ${this.state.y}`}
           <div className="div-bot" onPointerDown={this.divPointerDown2} />
         </div>
         <div style={getTestDivStyle(`test2`)} />
